@@ -146,48 +146,8 @@ int listar_grupo()
     return (escolha);
 }
 
-/*void estimar_valor_kcal_correto(alimento_tipo *al, int *qtd)
-{
-    int soma=0;
-    char alim;
-    do
-    {
-        printf("Alimentos que ingeriu (0 para parar):\n");
-        scanf("%s",alim);
-        printf("%s",alim);
-        for(int i=0; i < *qtd; i++)
-            if(strcmp(alim, al[i].nome) == 0)
-            {
-                soma=soma + al[alim].kcal;
-            }
-    }
-    while ((alim != '0'));
-    if (alim != '0')
-    printf("O valor calorico da sua refeicao foi %d", soma);
-}*/
 
-/*void sort_structs_kcal(alimento_tipo *al, int *qtd)
-{
-    int i=0, a=0;
-    alimento_tipo temp;
-    for (i; i < *qtd; i++)
-    {
-        for (a; a< *qtd; a++)
-        {
-            if (al[i].kcal < al[*qtd-1-i].kcal)
-            {
-                temp = al[i];
-                al[i] = al [*qtd-a];
-                al[*qtd-a] = temp;
-            }
-        }
-    }
-}*/
-
-//sort srtucts by kcal
-
-
-void sort_structs_by_kcal(alimento_tipo *al, int *len)//schneizer fez tudo
+void sort_structs_by_kcal(alimento_tipo *al, int *len)
 {
     int         i, changed;
     alimento_tipo    temp;
@@ -211,17 +171,17 @@ void sort_structs_by_kcal(alimento_tipo *al, int *len)//schneizer fez tudo
 
 void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)
 {
-    printf("_________________________________\n");
-    printf("| grupo %d |\n",escolha);
-    printf("__________________________________\n");
-    printf("| Alimento | Kcal |\n");
-    printf("__________________________________\n");
+    printf("_______________________\n");
+    printf("|Grupo %d              |\n",escolha);
+    printf("-----------------------\n");
+    printf("|Alimento   |Kcal  |\n");//<3
+    printf("_______________________\n");
     for(int i = 0; i < *qtd; i++)
     {
         if ((al[i].grupo) == (escolha))
         {
-            printf("| %s | %d |\n",al[i].nome,al[i].kcal);
-            printf("__________________________________\n");
+            printf("|%3s    | %d |\n",al[i].nome,al[i].kcal);
+            printf("_______________________\n");
         }
 
     }
@@ -229,7 +189,6 @@ void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)
     system("Pause");
 }
 
-//----------------------------------------------------------------//
 
 void sort_structs(alimento_tipo *al, int *len)//Credito a Tiago Alves
 {
@@ -267,20 +226,6 @@ void mostrar_kcal_temp(alimento_tipo *al, int qtd)
     system("Pause");
 }
 
-
-
-//----------------------------------------------------------------//
-
-/*void	print_test(alimento_tipo *al, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-		printf("test: %s\n", al[i++].nome);
-}----------------------------------------------------------------//*/
-
-
 int submenu_2()
 {
     int qtd = 0, escolha;
@@ -296,9 +241,9 @@ int submenu_2()
             system ("cls");
             printf("Menu Gestao de Alimentos\n\n");
             printf("1 ... Inserir alimento\n");
-            printf("2 ... Estimar o valor calorífico de uma refeição através da escolha dos\n      alimentos da lista (TCA), e indicação das respetivas quantidades.\n");
+            printf("2 ... Estimar o valor calorifico de uma refeicao atraves da escolha dos\n      alimentos da lista (TCA), e indicacao das respetivas quantidades.\n");
             printf("3 ... Listar alimentos de um grupo alimentar\n");
-            printf("4 ... Listagem alfabética dos alimentos\n");
+            printf("4 ... Listagem alfabetica dos alimentos\n");
             printf("0 ... Voltar ao Menu Principal\n");
             printf("\nSelecionar opcao: ");
             scanf(" %c", &op);
@@ -324,7 +269,6 @@ int submenu_2()
         {
             system("cls");
             sort_structs_by_kcal(al,&qtd);
-            //mostrar_kcal_temp(al,qtd);
             escolha = listar_grupo();
             system("cls");
             printf("\n");
@@ -348,7 +292,7 @@ int submenu_2()
 
 
 
-int submenu_1()  
+int submenu_1()
 {
     char op;
     do
@@ -386,7 +330,7 @@ int submenu_1()
 }
 
 
-int main() 
+int main()
 {
     int qtd = 0;
     char op;
@@ -428,3 +372,4 @@ int main()
     system("PAUSE");
     return 0;
 }
+
