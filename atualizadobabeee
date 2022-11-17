@@ -1,0 +1,439 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define  MAX_ALIMENTOS 10
+
+typedef enum
+{
+    fruta = 3,
+    gorduras_e_oleos = 2,
+    laticinios = 4,
+    carnes_pescados_e_ovos = 5,
+    leguminosas = 6,
+    ceriais_derivados_e_tuberculos = 1,
+    horticulas = 7
+} grupo_tipo;
+
+typedef struct
+{
+    char nome[26];
+    grupo_tipo grupo;
+    int	unidade;
+    int	peso;
+    int	kcal;
+} 		alimento_tipo;
+
+/*typedef struct
+{
+    char nome[26]
+}*/
+
+
+
+
+void	inicializar_alimentos(alimento_tipo *al, int *qtd)
+{
+    strcpy(al[0].nome,"Carne de peru");
+    al[0].grupo = 5;
+    al[0].unidade = 1;
+    al[0].peso = 100;
+    al[0].kcal = 153;
+
+    strcpy(al[1].nome,"Macarrao");
+    al[1].grupo = 1;
+    al[1].unidade = 1;
+    al[1].peso = 200;
+    al[1].kcal = 192;
+
+    strcpy(al[2].nome,"Maça");
+    al[2].grupo = 3;
+    al[2].unidade = 1;
+    al[2].peso = 100;
+    al[2].kcal = 64;
+
+    strcpy(al[3].nome,"Ovo inteiro cru");
+    al[3].grupo = 5;
+    al[3].unidade = 1;
+    al[3].peso = 50;
+    al[3].kcal = 74;
+
+    strcpy(al[4].nome,"Pao de centeio");
+    al[4].grupo = 1;
+    al[4].unidade = 1;
+    al[4].peso = 30;
+    al[4].kcal = 70;
+
+    *qtd = 5;
+}
+
+void	mostrar_alimentos(alimento_tipo *al, int qtd)
+{
+    for(int i = 0; i < qtd; i++)
+    {
+        printf("\nAlimento %d", i);
+        printf("\nNome=%s", al[i].nome);
+        printf("\nGrupo=%d", al[i].grupo);
+        printf("\nUnidade=%d", al[i].unidade);
+        printf("\nPeso=%d", al[i].peso);
+        printf("\nKcal=%d", al[i].kcal);
+        printf("\n");
+    }
+    system("Pause");
+}
+
+void inserir_alimentos(alimento_tipo *al, int *qtd)
+{
+    if (*qtd < MAX_ALIMENTOS)
+    {
+        printf("Alimento %d\n", *qtd);
+        printf("Nome=");
+        scanf(" %[^t\n]", al[*qtd].nome);
+        for(int i = 0; i < *qtd; i++)
+        {
+            if (strcmp(al[*qtd].nome, al[i].nome) == 0)
+            {
+                printf("\nAlimento ja existe\n");
+                i = *qtd;
+            }
+            else
+            {
+                printf("Grupo=");
+                scanf("%d", &al[*qtd].grupo);
+                printf("Unidade=");
+                scanf("%d", &al[*qtd].unidade);
+                printf("Peso=");
+                scanf("%d", &al[*qtd].peso);
+                printf("Kcal=");
+                scanf("%d", &al[*qtd].kcal);
+                printf("\n");
+                *qtd= *qtd + 1;
+                break;
+            }
+
+        }
+    }
+    else
+    {
+        printf("Numero maximo de alimentos atingido!\n");
+    }
+    system("Pause");
+}
+
+
+void estimar_valor_kcal(alimento_tipo *al)
+{
+    int num, somacal=0, i=0, quant;
+    int numalim;
+
+    do
+    {
+        printf("Numero do alimento que ingeriu (999 para parar):");
+        scanf("%d",&numalim);
+        if(numalim != 999)
+        {
+            printf("Quantidade do alimento que ingeriu:");
+            scanf("%d", &quant);
+            somacal = somacal + quant * al[numalim].kcal;
+        }
+    }
+    while(numalim != 999);
+    if (numalim == 999)
+        printf("\nO valor calorífico da sua refeição foi de %d kcal.\n\n", somacal);
+    system("Pause");
+}
+
+int listar_grupo()
+{
+    int escolha;
+    printf("\n\nQual o grupo que pretende listar?\n\n1 - ceriais derivados e tuberculos\n2 - gorduras e oleos\n3 - fruta\n4 - laticinios\n5 - carnes pescados e ovos\n6 - leguminosas\n7 - horticulas");
+    scanf("%d",&escolha);
+    return (escolha);
+}
+
+/*void estimar_valor_kcal_correto(alimento_tipo *al, int *qtd)
+{
+    int soma=0;
+    char alim;
+    do
+    {
+        printf("Alimentos que ingeriu (0 para parar):\n");
+        scanf("%s",alim);
+        printf("%s",alim);
+        for(int i=0; i < *qtd; i++)
+            if(strcmp(alim, al[i].nome) == 0)
+            {
+                soma=soma + al[alim].kcal;
+            }
+    }
+    while ((alim != '0'));
+    if (alim != '0')
+    printf("O valor calorico da sua refeicao foi %d", soma);
+}*/
+
+/*void sort_structs_kcal(alimento_tipo *al, int *qtd)
+{
+    int i=0, a=0;
+    alimento_tipo temp;
+    for (i; i < *qtd; i++)
+    {
+        for (a; a< *qtd; a++)
+        {
+            if (al[i].kcal < al[*qtd-1-i].kcal)
+            {
+                temp = al[i];
+                al[i] = al [*qtd-a];
+                al[*qtd-a] = temp;
+            }
+        }
+    }
+}*/
+
+//sort srtucts by kcal
+
+
+void sort_structs_by_kcal(alimento_tipo *al, int *len)//schneizer fez tudo
+{
+    int         i, changed;
+    alimento_tipo    temp;
+    do
+    {
+        changed = 0;
+        for (i=0; i < (*len) - 1; i++)
+        {
+            if ((al[i].kcal - al[i+1].kcal) < 0)
+            {
+                memcpy(&temp, al + i, sizeof (alimento_tipo));
+                memcpy(al + i, al + i + 1, sizeof (alimento_tipo));
+                memcpy(al + i + 1, &temp, sizeof (alimento_tipo));
+                changed = 1;
+            }
+        }
+    }
+    while (changed != 0);
+}
+
+
+void mostrar_tabela(alimento_tipo *al, int qtd, int escolha)
+{
+
+    printf("|------------------------------------------------|");
+    printf("|                    grupo %d                    |",escolha);
+    printf("|------------------------------------------------|");
+    for(int i = 0; i < qtd; i++)
+    {
+        if ((al[i].grupo) == (escolha))
+        {
+            printf("|                      %s                        |",al[i].nome);
+            printf("|------------------------------------------------|");
+        }
+
+    }
+}
+
+//----------------------------------------------------------------//
+
+void sort_structs(alimento_tipo *al, int *len)//schneizer fez tudo
+{
+    int 		i, changed;
+    alimento_tipo	temp;
+    do
+    {
+        changed = 0;
+        for (i=0; i < (*len) - 1; i++)
+        {
+            if (strcmp(al[i].nome, al[i+1].nome) > 0)
+            {
+                memcpy(&temp, al + i, sizeof (alimento_tipo));
+                memcpy(al + i, al + i + 1, sizeof (alimento_tipo));
+                memcpy(al + i + 1, &temp, sizeof (alimento_tipo));
+                changed = 1;
+            }
+        }
+    }
+    while (changed != 0);
+}
+
+void mostrar_kcal_temp(alimento_tipo *al, int qtd)
+{
+    for(int i = 0; i < qtd; i++)
+    {
+        printf("\nAlimento %d", i);
+        printf("\nNome=%s", al[i].nome);
+        printf("\nGrupo=%d", al[i].grupo);
+        printf("\nUnidade=%d", al[i].unidade);
+        printf("\nPeso=%d", al[i].peso);
+        printf("\nKcal=%d", al[i].kcal);
+        printf("\n");
+    }
+    system("Pause");
+}
+
+
+
+//----------------------------------------------------------------//
+
+/*void	print_test(alimento_tipo *al, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+		printf("test: %s\n", al[i++].nome);
+}----------------------------------------------------------------//*/
+
+
+int submenu_2()   ///Nivel 2 do menu
+{
+    int qtd = 0;
+    char op;
+    alimento_tipo al[MAX_ALIMENTOS];
+    setlocale(LC_ALL, "Portuguese");
+    inicializar_alimentos(al,&qtd);
+
+    do
+    {
+        do
+        {
+            system ("cls");
+            printf("Menu Gestao de Alimentos\n\n");
+            //printf("-----------------------------------------------\n");
+            printf("1 ... Inserir alimento\n");
+            printf("2 ... Estimar o valor calorífico de uma refeição através da escolha dos\n      alimentos da lista (TCA), e indicação das respetivas quantidades.\n");
+            printf("3 ... Listar alimentos de um grupo alimentar\n");
+            printf("4 ... Listagem alfabética dos alimentos\n");
+            printf("0 ... Voltar ao Menu Principal\n");
+            //printf("-----------------------------------------------\n\n");
+            printf("\nSelecionar opcao: ");
+            scanf(" %c", &op);
+        }
+        while(op!='0' && op!='1' && op!='2' && op!='3' && op!='4');
+
+        switch (op)
+        {
+        case '1':
+        {
+            system("cls");
+            inserir_alimentos(al,&qtd);
+            sort_structs(al,&qtd);
+            break;
+        }
+        case '2':
+        {
+            system("cls");
+            estimar_valor_kcal(al);
+            //estimar_valor_kcal_correto(al,&qtd);
+            break;
+        }
+        case '3':
+        {
+            system("cls");
+            sort_structs_by_kcal(al,&qtd);
+            //mostrar_kcal_temp(al,qtd);
+            listar_grupo();
+            mostrar_tabela(al,qtd);
+            break;
+        }
+        case '4':
+        {
+            system("cls");
+            sort_structs(al,&qtd);
+            mostrar_alimentos(al,qtd);
+            break;
+        }
+        }
+    }
+    while(op!='0');
+    printf("\n");
+    system("PAUSE");
+    return 0;
+}
+
+
+///------------------------------------------------------------------
+
+int submenu_1()   ///Nivel 1 do menu
+{
+    char op;
+    do
+    {
+        do
+        {
+            system ("cls");
+            printf("           SUBMENU 1 - nivel 1\n");
+            printf("-----------------------------------------------\n");
+            printf("  1 - ir para submenu nivel 2\n");
+            printf("  2 - ir para submenu nuvel 2\n");
+            printf("v/V - Voltar ao menu anterior - ir para nivel 0\n");
+            printf("-----------------------------------------------\n\n");
+            scanf(" %c", &op);
+        }
+        while(op!='v' && op!='V' && op!='1' && op!='2');
+
+        switch (op)
+        {
+        case '1':
+        {
+            submenu_2();
+            break;
+        }
+        case '2':
+        {
+            break;
+        }
+        }
+    }
+    while(op!='v' && op!='V');
+
+    system("PAUSE");
+    return 0;
+}
+///-------------------------------------------------------------------
+
+
+/// Fundo principal
+int main()   ///Nivel 0 do menu
+{
+    int qtd = 0;
+    char op;
+    alimento_tipo al[MAX_ALIMENTOS];
+    setlocale(LC_ALL, "Portuguese");
+
+    do
+    {
+        do
+        {
+            system ("cls");
+            printf("MENU PRINCIPAL\n\n");
+            //printf("------------------------------------\n");
+            printf("1 ... Gestao de Pessoas\n");
+            printf("2 ... Gestao de Alimentos\n");
+            printf("3 ... Gestao de Dietas\n");
+            printf("4 ... Estatisticas\n");
+            printf("0 ... Sair\n");
+            //printf("------------------------------------\n\n");
+            printf("\nSelecionar opcao: ");
+            scanf(" %c", &op);
+        }
+        while(op!='0' && op!='1' && op!='2' && op!='3' && op!='4');
+
+        switch (op)
+        {
+        //case '1':
+        //        {
+        //           submenu_1();
+        //           break;
+        //        }
+        case '2':
+        {
+            submenu_2();
+            break;
+        }
+        }
+    }
+    while(op!='0');
+    printf("\n");
+    system("PAUSE");
+    return 0;
+}
