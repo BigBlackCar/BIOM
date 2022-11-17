@@ -92,7 +92,7 @@ void inserir_alimentos(alimento_tipo *al, int *qtd)
             else
             {
                 printf("Grupo=");
-                scanf("%d", &al[*qtd].grupo);
+                scanf("%d", (int *)&al[*qtd].grupo);
                 printf("Unidade=");
                 scanf("%d", &al[*qtd].unidade);
                 printf("Peso=");
@@ -171,17 +171,17 @@ void sort_structs_by_kcal(alimento_tipo *al, int *len)
 
 void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)
 {
-    printf("_______________________\n");
-    printf("|Grupo %d              |\n",escolha);
-    printf("-----------------------\n");
-    printf("|Alimento   |Kcal  |\n");//<3
-    printf("_______________________\n");
+    printf("_________________________________\n");
+    printf("|Grupo %d                        |\n",escolha);
+    printf("_________________________________\n");
+    printf("|Alimento               |Kcal   |\n");
+    printf("_________________________________\n");
     for(int i = 0; i < *qtd; i++)
     {
         if ((al[i].grupo) == (escolha))
         {
-            printf("|%3s    | %d |\n",al[i].nome,al[i].kcal);
-            printf("_______________________\n");
+            printf("|%-23s|%-7d|\n",al[i].nome,al[i].kcal);
+	    printf("_________________________________\n");
         }
 
     }
