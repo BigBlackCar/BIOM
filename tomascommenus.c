@@ -274,7 +274,7 @@ void inserir_pessoas(pessoa_tipo pt[], int *qtd2)//procedimento para inserir pes
 {
 
     printf("Insira o nome da pessoa:");
-    scanf("%s", &pt[*qtd2].nome);
+    scanf(" %[^t\n]", &pt[*qtd2].nome);
     printf("Insira o peso da pessoa:");
     scanf("%d", &pt[*qtd2].peso);
     printf("Insira a altura da pessoa em cm:");
