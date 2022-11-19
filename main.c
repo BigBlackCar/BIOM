@@ -7,7 +7,7 @@
 
 typedef enum //estilo de vido tipo enumerado(TC)
 {
-    sedentario=1,
+    sedentario="sedentario",
     pouco_ativo,
     ativo,
     muito_ativo,
@@ -87,7 +87,7 @@ void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao
     pt[0].altura=172;
     pt[0].idade=18;
     strcpy(pt[0].sexo,"m");
-    strcpy(pt[0].est,"Ativo");
+    strcpy(pt[0].est,"ativo");
     pt[0].imc=24;
 
     strcpy(pt[1].nome,"Joel Silva");
