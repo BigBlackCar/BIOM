@@ -59,7 +59,7 @@ void	inicializar_alimentos(alimento_tipo *al, int *qtd)  //adiciona os alimentos
     al[1].peso = 200;
     al[1].kcal = 192;
 
-    strcpy(al[2].nome,"MaÁa");
+    strcpy(al[2].nome,"Ma√ßa");
     al[2].grupo = 3;
     al[2].unidade = 1;
     al[2].peso = 100;
@@ -128,7 +128,7 @@ void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao
         printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
         scanf("%s", &genero);
 
-        if( strcmp( pt[i].sexo, genero )==0 )//se o sexo das pessoas for igual ao pedido pelo utilizador ir· aparecer as informaÁoes todas da pessoa
+        if( strcmp( pt[i].sexo, genero )==0 )//se o sexo das pessoas for igual ao pedido pelo utilizador ir√° aparecer as informa√ßoes todas da pessoa
         {
 
             printf("\nNome:%s",pt[i].nome);
@@ -212,11 +212,11 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pe
     }
     while( t < max );
     if (flag == 0)
-        printf("N„o est· na lista\n\n");
+        printf("N√£o est√° na lista\n\n");
     system("Pause");
 }
 
-void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda n„o exista (TD)
+void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda n√£o exista (TD)
 {
     if (*qtd < MAX_ALIMENTOS)
     {
@@ -297,7 +297,7 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para inserir pess
 }
 
 
-void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refeiÁ„o atraves de alimentos ingeridos e as respetivas quantidades (TD)
+void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refei√ß√£o atraves de alimentos ingeridos e as respetivas quantidades (TD)
 {
     int num, somacal=0, i=0, quant;
     int numalim;
@@ -373,7 +373,7 @@ void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)  //mostra a tabela
 }
 
 
-void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabÈtica (Credito a Tiago Alves)
+void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfab√©tica (Credito a Tiago Alves)
 {
     int 		i, changed;
     alimento_tipo	temp;
