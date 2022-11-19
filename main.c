@@ -7,7 +7,7 @@
 
 typedef enum //estilo de vido tipo enumerado(TC)
 {
-    sedentario="sedentario",
+    sedentario=1,
     pouco_ativo,
     ativo,
     muito_ativo,
@@ -24,7 +24,7 @@ typedef enum  //grupo tipo enumerado (TD)
     horticulas,
 } grupo_tipo;
 
-typedef struct  //struct dos alimentos (professora)
+typedef struct  ali//struct dos alimentos (professora)
 {
     char nome[26];
     grupo_tipo grupo;
@@ -33,9 +33,9 @@ typedef struct  //struct dos alimentos (professora)
     int	kcal;
 } 		alimento_tipo;
 
-typedef struct
+typedef struct psi
 {
-    char nome[26];//nome da pessoas
+    char nome[100];//nome da pessoas
     int peso;//peso da pessoas
     char sexo[20];//sexo da pessoas
     int altura;//altura da pessoas
@@ -87,10 +87,10 @@ void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao
     pt[0].altura=172;
     pt[0].idade=18;
     strcpy(pt[0].sexo,"m");
-    strcpy(pt[0].est,"ativo");
+    strcpy(pt[0].est,"Ativo");
     pt[0].imc=24;
 
-    strcpy(pt[1].nome,"Joel Silva");
+    strcpy(pt[1].nome,"c");
     pt[1].peso=72;
     pt[1].altura=176;
     pt[1].idade=18;
@@ -389,6 +389,36 @@ void sort_structs_pessoas(pessoa_tipo *pt, int len)//ordena os nomes por ordem a
 void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pessoas
 {
     int t=0, flag = 0, max;
+    char z[]="zzzzzzz";
+    char eli[] = "c";
+    //eli = (char *)malloc(sizeof(char) * 80 + 1);
+    printf("Insira o nome da pessoa que quer eliminar:");
+    //scanf(" %[^\n]", eli);
+    printf("%s\n",eli);
+    max = *qtd2;
+    do
+    {
+        if( strcmp( pt[t].nome, eli ) == 0 )//compara o nome escrito pelo utilizador com todos os nomes no programa
+        {
+            system ("cls");
+            strcpy(pt[t].nome,z);
+            sort_structs_pessoas(pt,*qtd2);
+            *qtd2 = (*qtd2) - 1;//apaga o ultimo elemento da lista de nomes
+            system("PAUSE");
+            flag = 1;
+            break;
+        }
+        t++;
+    }
+    while( t < max );
+    if (flag == 0)
+        printf("Nao esta na lista\n\n");
+    system("Pause");
+}
+
+/*void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)
+{
+   int t=0, flag = 0, max;
     char *eli;
 
     eli = (char *)malloc(sizeof(char) * 80 + 1);
@@ -401,9 +431,8 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pe
         if( strcmp( pt[t].nome, eli ) == 0 )//compara o nome escrito pelo utilizador com todos os nomes no programa
         {
             system ("cls");
-            strcpy(pt[t].nome,"zzzz");//se for igual muda o nome desse utilizador para "zzzz"
-            sort_structs_pessoas(pt,*qtd2);
-            *qtd2 = (*qtd2) - 1;//apaga o ultimo elemento da lista de nomes
+            pt[t].name = "zzzzz";
+            sort_structs_pessoas(&pt,*qtd2);
             system("PAUSE");
             flag = 1;
             break;
@@ -414,7 +443,7 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pe
     if (flag == 0)
         printf("Não está na lista\n\n");
     system("Pause");
-}
+}*/
 
 
 int submenu_2()
