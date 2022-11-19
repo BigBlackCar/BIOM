@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,7 +39,7 @@ typedef struct
     int peso;//peso da pessoas
     char sexo[20];//sexo da pessoas
     int altura;//altura da pessoas
-    int estilo;//variavel numerica estilo das pessoas
+    estilo_tipo estilo;//variavel numerica estilo das pessoas
     char est[30];//variavel
     int idade;//idade das pessoas
     float imc;//indice de massa corporal das pessoas
@@ -83,15 +82,15 @@ void	inicializar_alimentos(alimento_tipo *al, int *qtd)  //adiciona os alimentos
 
 void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao sistema
 {
-    strcpy(pt[0].nome,"cristiano diniz");
+    strcpy(pt[0].nome,"Cristiano Diniz");
     pt[0].peso=72;
     pt[0].altura=172;
     pt[0].idade=18;
     strcpy(pt[0].sexo,"m");
-    strcpy(pt[0].est,"ativo");
+    strcpy(pt[0].est,"Ativo");
     pt[0].imc=24;
 
-    strcpy(pt[1].nome,"joel silva");
+    strcpy(pt[1].nome,"Joel Silva");
     pt[1].peso=72;
     pt[1].altura=176;
     pt[1].idade=18;
@@ -99,7 +98,7 @@ void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao
     strcpy(pt[1].est,"ativo");
     pt[1].imc=23;
 
-    strcpy(pt[2].nome,"cristina ferreira ");
+    strcpy(pt[2].nome,"Cristina Ferreira ");
     pt[2].peso=70;
     pt[2].altura=170;
     pt[2].idade=45;
@@ -107,7 +106,7 @@ void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao
     strcpy(pt[2].est,"pouco ativo");
     pt[2].imc=24;
 
-    strcpy(pt[3].nome,"cristiano ronaldo");
+    strcpy(pt[3].nome,"Cristiano Ronaldo");
     pt[3].peso=72;
     pt[3].altura=172;
     pt[3].idade=18;
@@ -116,56 +115,42 @@ void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao
     pt[3].imc=24;
     *qtd2=4;
 }
-void ordenar_pessoas(pessoa_tipo pt[], int *qtd2){//procedimento para ordenar as pessoas pelo sexo pedido pelo utilizador
-int i;//variavel numerica
-char genero[2];//variavel pedida ao utilizador para comparar com o sexo das pessoas no sistema
+void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) //procedimento para ordenar as pessoas pelo sexo pedido pelo utilizador
+{
+    int i;//variavel numerica
+    char genero[2];//variavel pedida ao utilizador para comparar com o sexo das pessoas no sistema
 
-i=0;
+    i=0;
 
-   do{
-    printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
-scanf("%s", &genero);
+    do
+    {
+        printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
+        scanf("%s", &genero);
 
         if( strcmp( pt[i].sexo, genero )==0 )//se o sexo das pessoas for igual ao pedido pelo utilizador irá aparecer as informaçoes todas da pessoa
         {
 
-        printf("\nNome:%s",pt[i].nome);
-        printf("\nIdade:%d",pt[i].idade);
-        printf("\nAltura:%dcm",pt[i].altura);
-        printf("\nEstilo de vida:%s",pt[i].est);
-        printf("\nPeso:%dkg",pt[i].peso);
-        printf("\nIMC=%.2f",pt[i].imc);
-        printf("\n");
+            printf("\nNome:%s",pt[i].nome);
+            printf("\nIdade:%d",pt[i].idade);
+            printf("\nAltura:%dcm",pt[i].altura);
+            printf("\nEstilo de vida:%s",pt[i].est);
+            printf("\nPeso:%dkg",pt[i].peso);
+            printf("\nIMC=%.2f",pt[i].imc);
+            printf("\n");
 
- i++;
+            i++;
 
-        } while( i<*qtd2 );
-
-
-        }while(genero!='m' && genero!='f');
-
-
-}
-void sort_structs(pessoa_tipo *pt, int *len)//ordena os nomes por ordem alfabetica
-{
-    int         w=0, changed;
-    pessoa_tipo    temp;
-    do
-    {
-        changed = 0;
-        for (w=0; w < (*len) - 1; w++)
-        {
-            if (strcmp(pt[w].nome, pt[w+1].nome) > 0)
-            {
-                memcpy(&temp, pt + w, sizeof (pessoa_tipo));
-                memcpy(pt + w, pt + w + 1, sizeof (pessoa_tipo));
-                memcpy(pt + w + 1, &temp, sizeof (pessoa_tipo));
-                changed = 1;
-            }
         }
+        while( i<*qtd2 );
+
+
     }
-    while (changed != 0);
+    while(genero!='m' && genero!='f');
+
+
 }
+
+
 void	mostrar_alimentos(alimento_tipo *al, int qtd)  //mostra todos os alimentos e os respetivos atributos (TD)
 {
     for(int i = 0; i < qtd; i++)
@@ -181,20 +166,19 @@ void	mostrar_alimentos(alimento_tipo *al, int qtd)  //mostra todos os alimentos 
     system("Pause");
 }
 
-void mostrar_pessoas(pessoa_tipo pt[], int qtd2)//procedimento para mostrar todas as pessoas ja inseridas no sistema
+void mostrar_pessoas(pessoa_tipo *pt, int qtd2)//procedimento para mostrar todas as pessoas ja inseridas no sistema
 {
     int i;
-    float imc;
-    for(i=0; i<qtd2; i++)
+    for(i=0; i < qtd2; i++)
     {
 
-        printf("\nNome:%s",pt[i].nome);
-        printf("\nIdade:%d",pt[i].idade);
-        printf("\nAltura:%dcm",pt[i].altura);
-        printf("\nSexo:%s",pt[i].sexo);
-        printf("\nEstilo de vida:%s",pt[i].est);
-        printf("\nPeso:%dkg",pt[i].peso);
-        printf("\nIMC=%.2f",pt[i].imc);
+        printf("\nNome:%s", pt[i].nome);
+        printf("\nIdade:%d", pt[i].idade);
+        printf("\nAltura:%dcm", pt[i].altura);
+        printf("\nSexo:%s", pt[i].sexo);
+        printf("\nEstilo de vida:%s", pt[i].est);
+        printf("\nPeso:%dkg", pt[i].peso);
+        printf("\nIMC=%.2f", pt[i].imc);
         printf("\n");
     }
 
@@ -202,25 +186,23 @@ void mostrar_pessoas(pessoa_tipo pt[], int qtd2)//procedimento para mostrar toda
 }
 
 
-/*void eliminar_pessoas(pessoa_tipo pt[], int *qtd2)//procedimento para eliminar pessoas
+void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pessoas
 {
     int t;
-    char eli[50];
-
+    char eli[80];
     printf("Insira o nome da pessoa que quer eliminar:");
-    scanf("%s", &eli);
-
+    scanf(" %[^t\n]", eli);
+    printf(" %s\n",eli);
     t=0;
-do
+    do
     {
-        if( strcmp( pt[t].nome, eli )==0 )//compara o nome escrito pelo utilizador com todos os nomes no programa
+        if( strcmp( pt[t].nome, eli ) == 0 )//compara o nome escrito pelo utilizador com todos os nomes no programa
         {
             system ("cls");
-        strcpy(pt[t].nome,"zzzz");//se for igual muda o nome desse utilizador para "zzzz"
-        sort_structs(pt,&qtd2);//manda o utilizador para o fundo da lista
-        *qtd2=*qtd2-1;//apaga o ultimo elemento da lista de nomes
-
-  system("PAUSE");
+            strcpy(pt[t].nome,"zzzz");//se for igual muda o nome desse utilizador para "zzzz"
+            sort_structs_pessoas(pt,&qtd2);
+            *qtd2 = *qtd2 - 1;//apaga o ultimo elemento da lista de nomes
+            system("PAUSE");
             break;
         }
         else if( t == *qtd2 )
@@ -228,9 +210,10 @@ do
             printf("Não está na lista\n\n");
         }
         t++;
-    }  while( t<*qtd2 );
-
-}*/
+    }
+    while( t < *qtd2 );
+    system("Pause");
+}
 
 void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda não exista (TD)
 {
@@ -270,18 +253,17 @@ void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo
     system("Pause");
 }
 
-void inserir_pessoas(pessoa_tipo pt[], int *qtd2)//procedimento para inserir pessoas
+void inserir_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para inserir pessoas
 {
-
     printf("Insira o nome da pessoa:");
-    scanf(" %[^t\n]", &pt[*qtd2].nome);
+    scanf(" %[^t\n]", pt[*qtd2].nome);
     printf("Insira o peso da pessoa:");
     scanf("%d", &pt[*qtd2].peso);
     printf("Insira a altura da pessoa em cm:");
     scanf("%d", &pt[*qtd2].altura);
     printf("Insira a idade da pessoa:");
     scanf("%d", &pt[*qtd2].idade);
-    pt[*qtd2].imc=pt[*qtd2].peso/((pt[*qtd2].altura*0,01)*(pt[*qtd2].altura*0,01));
+    pt[*qtd2].imc = pt[*qtd2].peso / ((pt[*qtd2].altura*0,01) * (pt[*qtd2].altura*0,01));
     printf("Insira o sexo da pessoa(m ou f):");
     scanf("%s", &pt[*qtd2].sexo);
     printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo");
@@ -310,7 +292,7 @@ void inserir_pessoas(pessoa_tipo pt[], int *qtd2)//procedimento para inserir pes
     }
 
     }
-    *qtd2=*qtd2+1;
+    *qtd2 = *qtd2 + 1;
 }
 
 
@@ -411,6 +393,27 @@ void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem a
     while (changed != 0);
 }
 
+void sort_structs_pessoas(pessoa_tipo *pt, int *lon)//ordena os nomes por ordem alfabetica
+{
+    int         w=0, changed;
+    pessoa_tipo    temp;
+    do
+    {
+        changed = 0;
+        for (w=0; w < (*lon) - 1; w++)
+        {
+            if (strcmp(pt[w].nome, pt[w+1].nome) > 0)
+            {
+                memcpy(&temp, pt + w, sizeof (pessoa_tipo));
+                memcpy(pt + w, pt + w + 1, sizeof (pessoa_tipo));
+                memcpy(pt + w + 1, &temp, sizeof (pessoa_tipo));
+                changed = 1;
+            }
+        }
+    }
+    while (changed != 0);
+}
+
 int submenu_2()
 {
     int qtd = 0, escolha;
@@ -487,11 +490,11 @@ int submenu_1()
         do
         {
             system ("cls");
-            printf("Menu Gestao de Pessoas\n");;
-            printf("\n1 ... Inserir Pessoa\n");
-            printf("2 ...  Eliminar Pessoa\n");
-            printf("3 ...  Mostrar Pessoas agrupadas por sexo e estilo de vida\n");
-            printf("4 ...  Listar Todas as Pessoas\n");
+            printf("Menu Gestao de Pessoas\n\n");;
+            printf("1 ... Inserir Pessoa\n");
+            printf("2 ... Eliminar Pessoa\n");
+            printf("3 ... Mostrar Pessoas agrupadas por sexo e estilo de vida\n");
+            printf("4 ... Listar Todas as Pessoas\n");
             printf("0 ... Voltar ao menu principal\n\n");
             printf("Selecionar opcao: ");
             scanf(" %c", &op);
@@ -506,22 +509,23 @@ int submenu_1()
             inserir_pessoas(pt,&qtd2);
             break;
         }
-        /*case '2':
+        case '2':
         {
             system("cls");
             eliminar_pessoas(pt,&qtd2);
             break;
-        }*/
+        }
         case '3':
-            {
-             system("cls");
-             ordenar_pessoas(pt,&qtd2);
-            }
+        {
+            system("cls");
+            ordenar_pessoas(pt,&qtd2);
+        }
         case '4':
-            {
-                system("cls");
-                mostrar_pessoas(pt,&qtd2);
-            }
+        {
+            system("cls");
+            sort_structs_pessoas(pt,&qtd2);
+            mostrar_pessoas(pt,qtd2);
+        }
         }
     }
     while(op!='0');
