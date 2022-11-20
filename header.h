@@ -56,6 +56,11 @@ typedef struct pessoas
 //insert values
 void	inicializar_alimentos(alimento_tipo *al, int *qtd);
 void	inicializar_pessoas(pessoa_tipo pt[], int *qtd2);
+void 	inserir_alimentos(alimento_tipo *al, int *qtd);
+void 	inserir_pessoas(pessoa_tipo *pt, int *qtd2);
+void 	estimar_valor_kcal(alimento_tipo *al);
+void 	eliminar_pessoas(pessoa_tipo *pt, int *qtd2);
+
 
 //sort things
 void	ordenar_pessoas(pessoa_tipo pt[], int *qtd2);
@@ -63,7 +68,10 @@ void	sort_structs_by_kcal(alimento_tipo *al, int *len);
 void	sort_structs(alimento_tipo *al, int *len);
 void	sort_structs_pessoas(pessoa_tipo *pt, int len);
 
-
-
+//print
+int 	listar_grupo(void);
+void	mostrar_alimentos(alimento_tipo *al, int qtd);
+void 	mostrar_pessoas(pessoa_tipo *pt, int qtd2);
+void 	mostrar_tabela(alimento_tipo *al, int *qtd, int escolha);
 
 #endif
