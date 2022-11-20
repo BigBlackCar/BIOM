@@ -50,7 +50,7 @@ void	inicializar_pessoas(pessoa_tipo pt[], int *qtd2)
     pt[1].altura=176;
     pt[1].idade=18;
     strcpy(pt[1].sexo,"m");
-    strcpy(pt[1].est,"ativo");
+    strcpy(pt[1].est,"Ativo");
     pt[1].imc=23;
 
     strcpy(pt[2].nome,"Cristina Ferreira");
@@ -58,7 +58,7 @@ void	inicializar_pessoas(pessoa_tipo pt[], int *qtd2)
     pt[2].altura=170;
     pt[2].idade=45;
     strcpy(pt[2].sexo,"f");
-    strcpy(pt[2].est,"pouco ativo");
+    strcpy(pt[2].est,"Pouco ativo");
     pt[2].imc=24;
 
     strcpy(pt[3].nome,"Cristiano Ronaldo");
@@ -66,7 +66,7 @@ void	inicializar_pessoas(pessoa_tipo pt[], int *qtd2)
     pt[3].altura=172;
     pt[3].idade=18;
     strcpy(pt[3].sexo,"m");
-    strcpy(pt[3].est,"muito ativo");
+    strcpy(pt[3].est,"Muito ativo");
     pt[3].imc=24;
     *qtd2=4;
 }
@@ -196,6 +196,38 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pe
     system("Pause");
 }
 
+void    calc_imc_male(pessoa_tipo pt, char *str)
+{
+    if (pt.imc > 40)
+        strcpy(str, "Obesidade Morbida");
+    else if (pt.imc > 30)
+        strcpy(str, "Obesidade Moderada");
+    else if (pt.imc > 25)
+        strcpy(str, "Obesidade Leve");
+    else if (pt.imc > 20)
+        strcpy(str, "Normal");
+    else if (pt.imc > 0)
+        strcpy(str, "Abaixo do Normal");
+    else
+    strcpy(str, "IMC Invalido");
 
+}
+
+void    calc_imc_female(pessoa_tipo pt, char *str)
+{
+    if (pt.imc > 39)
+        strcpy(str, "Obesidade Morbida");
+    else if (pt.imc > 29)
+        strcpy(str, "Obesidade Moderada");
+    else if (pt.imc > 24)
+        strcpy(str, "Obesidade Leve");
+    else if (pt.imc > 19)
+        strcpy(str, "Normal");
+    else if (pt.imc > 0)
+        strcpy(str, "Abaixo do Normal");
+    else
+        strcpy(str, "IMC Invalido");
+
+}
 
 // :)

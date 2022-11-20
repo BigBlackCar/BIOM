@@ -26,20 +26,20 @@ int	submenu_2(int *qtd)
 		switch (op)
 		{
 			case '1':
-			
+
 			    system("cls");
 			    inserir_alimentos(al, qtd);
 			    sort_structs(al, qtd);
 			    break;
-			
+
 			case '2':
-			
+
 			    system("cls");
 			    estimar_valor_kcal(al);
 			    break;
-			
+
 			case '3':
-			
+
 			    system("cls");
 			    sort_structs_by_kcal(al, qtd);
 			    escolha = listar_grupo();
@@ -47,14 +47,14 @@ int	submenu_2(int *qtd)
 			    printf("\n");
 			    mostrar_tabela(al, qtd,escolha);
 			    break;
-			
+
 			case '4':
-			
+
 			    system("cls");
 			    sort_structs(al, qtd);
 			    mostrar_alimentos(al,*qtd);
 			    break;
-			
+
 		}
 	}
 	while(op!='0');
@@ -101,11 +101,11 @@ int	submenu_1(int *qtd2)
 		    eliminar_pessoas(pt,qtd2);
 		    break;
 
-		/*case '3':
+		case '3':
 
 		    system("cls");
 		    ordenar_pessoas(pt,&qtd2);
-		*/
+
 		case '4':
 
 		    system("cls");

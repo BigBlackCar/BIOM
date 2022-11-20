@@ -3,36 +3,29 @@
 void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) //procedimento para ordenar as pessoas pelo sexo pedido pelo utilizador
 {
     int i;//variavel numerica
-    char genero[1];//variavel pedida ao utilizador para comparar com o sexo das pessoas no sistema
-
+    char gen[1];//variavel pedida ao utilizador para comparar com o sexo das pessoas no sistema
+    char pool[100];
     i=0;
 
     do
     {
         printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
-        scanf("%c", &genero[0]);
-
-        if( strcmp( pt[i].sexo, genero )==0 )//se o sexo das pessoas for igual ao pedido pelo utilizador irá aparecer as informaçoes todas da pessoa
+        scanf(" %c", &gen[0]);
+        if ( gen[0] == 'm' || gen[0] == 'f')
         {
-
+            if (gen[0] == 'm')
+                calc_imc_male(pt[i],pool);
+            else
+                calc_imc_female(pt[i],pool);
             printf("\nNome:%s",pt[i].nome);
-            printf("\nIdade:%d",pt[i].idade);
-            printf("\nAltura:%dcm",pt[i].altura);
             printf("\nEstilo de vida:%s",pt[i].est);
-            printf("\nPeso:%dkg",pt[i].peso);
             printf("\nIMC=%.2f",pt[i].imc);
+            printf("\n%s",pool);
             printf("\n");
-
-            i++;
-
         }
-        while( i<*qtd2 );
-
-
+        i++;
     }
-    while(genero[0] != 'm' && genero[0] != 'f');
-
-
+    while(gen[0] != 'm' || gen[0] != 'f' || *qtd2 < i);
 }
 
 void sort_structs_by_kcal(alimento_tipo *al, int *len) //ordena as structs por ordem decrescente das kcal dos alimentos (TD)

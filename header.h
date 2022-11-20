@@ -54,6 +54,8 @@ void 	inserir_alimentos(alimento_tipo *al, int *qtd);
 void 	inserir_pessoas(pessoa_tipo *pt, int *qtd2);
 void 	estimar_valor_kcal(alimento_tipo *al);
 void 	eliminar_pessoas(pessoa_tipo *pt, int *qtd2);
+void    calc_imc_male(pessoa_tipo pt, char *str);
+void    calc_imc_female(pessoa_tipo pt, char *str);
 
 //sort.c
 void	ordenar_pessoas(pessoa_tipo pt[], int *qtd2);
