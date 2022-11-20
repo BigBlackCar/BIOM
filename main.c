@@ -1,12 +1,12 @@
 #include "header.h"
 
-int	submenu_2(void)
+int	submenu_2(int *qtd)
 {
-	int		qtd = 0, escolha;
+	int		escolha;
 	char 		op;
 	alimento_tipo 	al[MAX_ALIMENTOS];
 
-	inicializar_alimentos(al,&qtd);
+	inicializar_alimentos(al,qtd);
 	do
 	{
 		do
@@ -28,8 +28,8 @@ int	submenu_2(void)
 			case '1':
 			
 			    system("cls");
-			    inserir_alimentos(al,&qtd);
-			    sort_structs(al,&qtd);
+			    inserir_alimentos(al, qtd);
+			    sort_structs(al, qtd);
 			    break;
 			
 			case '2':
@@ -41,18 +41,18 @@ int	submenu_2(void)
 			case '3':
 			
 			    system("cls");
-			    sort_structs_by_kcal(al,&qtd);
+			    sort_structs_by_kcal(al, qtd);
 			    escolha = listar_grupo();
 			    system("cls");
 			    printf("\n");
-			    mostrar_tabela(al,&qtd,escolha);
+			    mostrar_tabela(al, qtd,escolha);
 			    break;
 			
 			case '4':
 			
 			    system("cls");
-			    sort_structs(al,&qtd);
-			    mostrar_alimentos(al,qtd);
+			    sort_structs(al, qtd);
+			    mostrar_alimentos(al,*qtd);
 			    break;
 			
 		}
@@ -65,13 +65,12 @@ int	submenu_2(void)
 
 
 
-int	submenu_1(void)
+int	submenu_1(int *qtd2)
 {
-	int		qtd2 = 0;
 	char		op;
 	pessoa_tipo 	pt[MAX_PESSOAS];
 
-	inicializar_pessoas(pt,&qtd2);
+	inicializar_pessoas(pt, qtd2);
 	do
 	{
 		do
@@ -93,13 +92,13 @@ int	submenu_1(void)
 			case '1':
 
 			system("cls");
-			inserir_pessoas(pt,&qtd2);
-		    break;
+			inserir_pessoas(pt,qtd2);
+		    	break;
 
-		case '2':
+			case '2':
 
 		    system("cls");
-		    eliminar_pessoas(pt,&qtd2);
+		    eliminar_pessoas(pt,qtd2);
 		    break;
 
 		/*case '3':
@@ -110,8 +109,8 @@ int	submenu_1(void)
 		case '4':
 
 		    system("cls");
-		    sort_structs_pessoas(pt,qtd2);
-		    mostrar_pessoas(pt,qtd2);
+		    sort_structs_pessoas(pt,*qtd2);
+		    mostrar_pessoas(pt,*qtd2);
 
 		}
 	}
@@ -123,6 +122,7 @@ int	submenu_1(void)
 
 int	main(void)
 {
+	int		qtd = 0, qtd2 = 0;
 	char		op;
 	pessoa_tipo	al[MAX_PESSOAS];
 	alimento_tipo	pt[MAX_ALIMENTOS];
@@ -144,11 +144,11 @@ int	main(void)
 		switch (op)
 		{
 			case '1':
-				submenu_1();
+				submenu_1(&qtd2);
 				break;
 
 			case '2':
-				submenu_2();
+				submenu_2(&qtd);
 				break;
 		}
 	}
@@ -157,3 +157,4 @@ int	main(void)
 	system("PAUSE");
 	return 0;
 }
+

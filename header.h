@@ -1,16 +1,12 @@
 #ifndef HEADER_H
 # define HEADER_H
 
-//includes
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-
-//defines
 # define MAX_ALIMENTOS 10
 # define MAX_PESSOAS 10
 
-//enums
 typedef enum
 {
 	sedentario=1,
@@ -21,7 +17,7 @@ typedef enum
 
 typedef enum
 {
-	ceriais_derivados_e_tuberculos = 1,
+	ceriais_derivados_e_tuberculos=1,
 	gorduras_e_oleos,
 	fruta,
 	laticinios,
@@ -30,7 +26,6 @@ typedef enum
 	horticulas,
 } grupo_tipo;
 
-//structs
 typedef struct  alimentos
 {
 	int	kcal;
@@ -52,8 +47,7 @@ typedef struct pessoas
 	estilo_tipo estilo;
 } pessoa_tipo;
 
-//functions
-//insert values
+//info.c
 void	inicializar_alimentos(alimento_tipo *al, int *qtd);
 void	inicializar_pessoas(pessoa_tipo pt[], int *qtd2);
 void 	inserir_alimentos(alimento_tipo *al, int *qtd);
@@ -61,14 +55,13 @@ void 	inserir_pessoas(pessoa_tipo *pt, int *qtd2);
 void 	estimar_valor_kcal(alimento_tipo *al);
 void 	eliminar_pessoas(pessoa_tipo *pt, int *qtd2);
 
-
-//sort things
+//sort.c
 void	ordenar_pessoas(pessoa_tipo pt[], int *qtd2);
 void	sort_structs_by_kcal(alimento_tipo *al, int *len);
 void	sort_structs(alimento_tipo *al, int *len);
 void	sort_structs_pessoas(pessoa_tipo *pt, int len);
 
-//print
+//print.c
 int 	listar_grupo(void);
 void	mostrar_alimentos(alimento_tipo *al, int qtd);
 void 	mostrar_pessoas(pessoa_tipo *pt, int qtd2);

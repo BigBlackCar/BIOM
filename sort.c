@@ -98,6 +98,3 @@ void sort_structs_pessoas(pessoa_tipo *pt, int len)//ordena os nomes por ordem a
     while (changed != 0);
 }
 
-
-
-

@@ -119,34 +119,25 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para inserir pess
     scanf("%d", &pt[*qtd2].altura);
     printf("Insira a idade da pessoa:");
     scanf("%d", &pt[*qtd2].idade);
-    pt[*qtd2].imc = pt[*qtd2].peso / ((pt[*qtd2].altura*0,01) * (pt[*qtd2].altura*0,01));
+    pt[*qtd2].imc = pt[*qtd2].peso / ((pt[*qtd2].altura*(0.01)) * (pt[*qtd2].altura*(0.01)));
     printf("Insira o sexo da pessoa(m ou f):");
     scanf("%s", (char *)&pt[*qtd2].sexo);
     printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo");
     scanf("%d", (int *)&pt[*qtd2].estilo);
     switch (pt[*qtd2].estilo)
     {
-    case '1':
-    {
-        strcpy(pt[*qtd2].est,"Sedentario");
-        break;
-    }
-    case '2':
-    {
-        strcpy(pt[*qtd2].est,"Pouco ativo");
-        break;
-    }
-    case '3':
-    {
-        strcpy(pt[*qtd2].est,"Ativo");
-        break;
-    }
-    case '4':
-    {
-        strcpy(pt[*qtd2].est,"Muito ativo");
-        break;
-    }
-
+	    case 1:
+		strcpy(pt[*qtd2].est,"Sedentario");
+		break;
+	    case 2:
+		strcpy(pt[*qtd2].est,"Pouco ativo");
+		break;
+	    case 3:
+		strcpy(pt[*qtd2].est,"Ativo");
+		break;
+	    case 4:
+		strcpy(pt[*qtd2].est,"Muito ativo");
+		break;
     }
     *qtd2 = *qtd2 + 1;
 }
@@ -206,3 +197,5 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pe
 }
 
 
+
+// :)
