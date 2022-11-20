@@ -41,7 +41,7 @@ typedef struct pessoas
 	int 	idade;
 	int 	altura;
 	char 	est[30];
-	char 	sexo[20];
+	char 	sexo[30];
 	char 	nome[100];
 	float 	imc;
 	estilo_tipo estilo;

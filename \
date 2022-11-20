@@ -8,13 +8,13 @@ void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) //procedimento para ordenar as
     i=0;
 
 	printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
-	scanf(" %s", gen);
+	scanf(" %c", &gen[0]);
 	if (gen[0] == 'm' || gen[0] == 'f')
 	{
 	    while (i < *qtd2)
 	    {
 	
-	    	if (gen[0] == pt[i].sexo[0])
+	    	if (gen[0] == pt[i].sexo)
 		{
 		    if (gen[0] == 'm')
 			calc_imc_male(pt[i],pool);

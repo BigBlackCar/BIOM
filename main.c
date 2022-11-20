@@ -104,7 +104,8 @@ int	submenu_1(int *qtd2)
 		case '3':
 
 		    system("cls");
-		    ordenar_pessoas(pt,&qtd2);
+		    ordenar_pessoas(pt,qtd2);
+		    system("PAUSE");
 
 		case '4':
 
