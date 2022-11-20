@@ -1,155 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define  MAX_ALIMENTOS 10
-#define MAX_PESSOAS 10
-
-typedef enum //estilo de vido tipo enumerado(TC)
-{
-    sedentario=1,
-    pouco_ativo,
-    ativo,
-    muito_ativo,
-} estilo_tipo;
-
-typedef enum  //grupo tipo enumerado (TD)
-{
-    ceriais_derivados_e_tuberculos = 1,
-    gorduras_e_oleos,
-    fruta,
-    laticinios,
-    carnes_pescados_e_ovos,
-    leguminosas,
-    horticulas,
-} grupo_tipo;
-
-typedef struct  ali//struct dos alimentos (professora)
-{
-    char nome[26];
-    grupo_tipo grupo;
-    int	unidade;
-    int	peso;
-    int	kcal;
-} 		alimento_tipo;
-
-typedef struct psi
-{
-    char nome[100];//nome da pessoas
-    int peso;//peso da pessoas
-    char sexo[20];//sexo da pessoas
-    int altura;//altura da pessoas
-    estilo_tipo estilo;//variavel numerica estilo das pessoas
-    char est[30];//variavel
-    int idade;//idade das pessoas
-    float imc;//indice de massa corporal das pessoas
-} pessoa_tipo;
-
-void	inicializar_alimentos(alimento_tipo *al, int *qtd)  //adiciona os alimentos base (professora)
-{
-    strcpy(al[0].nome,"Carne de peru");
-    al[0].grupo = 5;
-    al[0].unidade = 1;
-    al[0].peso = 100;
-    al[0].kcal = 153;
-
-    strcpy(al[1].nome,"Macarrao");
-    al[1].grupo = 1;
-    al[1].unidade = 1;
-    al[1].peso = 200;
-    al[1].kcal = 192;
-
-    strcpy(al[2].nome,"Maça");
-    al[2].grupo = 3;
-    al[2].unidade = 1;
-    al[2].peso = 100;
-    al[2].kcal = 64;
-
-    strcpy(al[3].nome,"Ovo inteiro cru");
-    al[3].grupo = 5;
-    al[3].unidade = 1;
-    al[3].peso = 50;
-    al[3].kcal = 74;
-
-    strcpy(al[4].nome,"Pao de centeio");
-    al[4].grupo = 1;
-    al[4].unidade = 1;
-    al[4].peso = 30;
-    al[4].kcal = 70;
-
-    *qtd = 5;
-}
-
-void inicializar_pessoas(pessoa_tipo pt[], int *qtd2)//pessoas ja adicionadas ao sistema
-{
-    strcpy(pt[0].nome,"Cristiano Diniz");
-    pt[0].peso=72;
-    pt[0].altura=172;
-    pt[0].idade=18;
-    strcpy(pt[0].sexo,"m");
-    strcpy(pt[0].est,"Ativo");
-    pt[0].imc=24;
-
-    strcpy(pt[1].nome,"c");
-    pt[1].peso=72;
-    pt[1].altura=176;
-    pt[1].idade=18;
-    strcpy(pt[1].sexo,"m");
-    strcpy(pt[1].est,"ativo");
-    pt[1].imc=23;
-
-    strcpy(pt[2].nome,"Cristina Ferreira");
-    pt[2].peso=70;
-    pt[2].altura=170;
-    pt[2].idade=45;
-    strcpy(pt[2].sexo,"f");
-    strcpy(pt[2].est,"pouco ativo");
-    pt[2].imc=24;
-
-    strcpy(pt[3].nome,"Cristiano Ronaldo");
-    pt[3].peso=72;
-    pt[3].altura=172;
-    pt[3].idade=18;
-    strcpy(pt[3].sexo,"m");
-    strcpy(pt[3].est,"muito ativo");
-    pt[3].imc=24;
-    *qtd2=4;
-}
-
-/*void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) //procedimento para ordenar as pessoas pelo sexo pedido pelo utilizador
-{
-    int i;//variavel numerica
-    char genero[2];//variavel pedida ao utilizador para comparar com o sexo das pessoas no sistema
-
-    i=0;
-
-    do
-    {
-        printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
-        scanf("%s", &genero);
-
-        if( strcmp( pt[i].sexo, genero )==0 )//se o sexo das pessoas for igual ao pedido pelo utilizador irá aparecer as informaçoes todas da pessoa
-        {
-
-            printf("\nNome:%s",pt[i].nome);
-            printf("\nIdade:%d",pt[i].idade);
-            printf("\nAltura:%dcm",pt[i].altura);
-            printf("\nEstilo de vida:%s",pt[i].est);
-            printf("\nPeso:%dkg",pt[i].peso);
-            printf("\nIMC=%.2f",pt[i].imc);
-            printf("\n");
-
-            i++;
-
-        }
-        while( i<*qtd2 );
+#include "header.h"
 
 
-    }
-    while(genero!='m' && genero!='f');
-
-
-}*/
 
 
 void	mostrar_alimentos(alimento_tipo *al, int qtd)  //mostra todos os alimentos e os respetivos atributos (TD)
@@ -204,7 +55,7 @@ void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo
             else
             {
                 printf("Grupo=");
-                scanf("%d", &al[*qtd].grupo);
+                scanf("%d", (int *)&al[*qtd].grupo);
                 printf("Unidade=");
                 scanf("%d", &al[*qtd].unidade);
                 printf("Peso=");
@@ -237,9 +88,9 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para inserir pess
     scanf("%d", &pt[*qtd2].idade);
     pt[*qtd2].imc = pt[*qtd2].peso / ((pt[*qtd2].altura*0,01) * (pt[*qtd2].altura*0,01));
     printf("Insira o sexo da pessoa(m ou f):");
-    scanf("%s", &pt[*qtd2].sexo);
+    scanf("%s", (char *)&pt[*qtd2].sexo);
     printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo");
-    scanf("%d", &pt[*qtd2].estilo);
+    scanf("%d", (int *)&pt[*qtd2].estilo);
     switch (pt[*qtd2].estilo)
     {
     case '1':
@@ -300,29 +151,6 @@ int listar_grupo() //escolher o numero do grupo que sera listado (TD)
     return (escolha);
 }
 
-
-void sort_structs_by_kcal(alimento_tipo *al, int *len) //ordena as structs por ordem decrescente das kcal dos alimentos (TD)
-{
-    int         i, changed;
-    alimento_tipo    temp;
-    do
-    {
-        changed = 0;
-        for (i=0; i < (*len) - 1; i++)
-        {
-            if ((al[i].kcal - al[i+1].kcal) < 0)
-            {
-                memcpy(&temp, al + i, sizeof (alimento_tipo));
-                memcpy(al + i, al + i + 1, sizeof (alimento_tipo));
-                memcpy(al + i + 1, &temp, sizeof (alimento_tipo));
-                changed = 1;
-            }
-        }
-    }
-    while (changed != 0);
-}
-
-
 void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)  //mostra a tabela com os alimentos do grupo escolhido e kcal por ordem decrescente (TD)
 {
     printf("_________________________________\n");
@@ -344,56 +172,14 @@ void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)  //mostra a tabela
 }
 
 
-void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabética (Credito a Scheneizer)
-{
-    int 		i, changed;
-    alimento_tipo	temp;
-    do
-    {
-        changed = 0;
-        for (i=0; i < (*len) - 1; i++)
-        {
-            if (strcmp(al[i].nome, al[i+1].nome) > 0)
-            {
-                memcpy(&temp, al + i, sizeof (alimento_tipo));
-                memcpy(al + i, al + i + 1, sizeof (alimento_tipo));
-                memcpy(al + i + 1, &temp, sizeof (alimento_tipo));
-                changed = 1;
-            }
-        }
-    }
-    while (changed != 0);
-}
-
-void sort_structs_pessoas(pessoa_tipo *pt, int len)//ordena os nomes por ordem alfabetica
-{
-    int         w, changed;
-    pessoa_tipo    temp;
-    do
-    {
-        changed = 0;
-        for (w=0; w < (len) - 1; w++)
-        {
-            if (strcmp(pt[w].nome, pt[w+1].nome) > 0)
-            {
-                memcpy(&temp, pt + w, sizeof (pessoa_tipo));
-                memcpy(pt + w, pt + w + 1, sizeof (pessoa_tipo));
-                memcpy(pt + w + 1, &temp, sizeof (pessoa_tipo));
-                changed = 1;
-            }
-        }
-    }
-    while (changed != 0);
-}
-
 void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pessoas
 {
     int t=0, flag = 0, max;
     char z[]="zzzzzzz";
-    char eli[] = "c";
-    //eli = (char *)malloc(sizeof(char) * 80 + 1);
+    char *eli;
+    eli = (char *)malloc(sizeof(char) * 80 + 1);
     printf("Insira o nome da pessoa que quer eliminar:");
-    //scanf(" %[^\n]", eli);
+    scanf(" %[^\n]", eli);
     printf("%s\n",eli);
     max = *qtd2;
     do
@@ -415,36 +201,6 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)//procedimento para eliminar pe
         printf("Nao esta na lista\n\n");
     system("Pause");
 }
-
-/*void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)
-{
-   int t=0, flag = 0, max;
-    char *eli;
-
-    eli = (char *)malloc(sizeof(char) * 80 + 1);
-    printf("Insira o nome da pessoa que quer eliminar:");
-    scanf(" %[^\n]", &eli);
-    printf("%s\n",eli);
-    max = *qtd2;
-    do
-    {
-        if( strcmp( pt[t].nome, eli ) == 0 )//compara o nome escrito pelo utilizador com todos os nomes no programa
-        {
-            system ("cls");
-            pt[t].name = "zzzzz";
-            sort_structs_pessoas(&pt,*qtd2);
-            system("PAUSE");
-            flag = 1;
-            break;
-        }
-        t++;
-    }
-    while( t < max );
-    if (flag == 0)
-        printf("Não está na lista\n\n");
-    system("Pause");
-}*/
-
 
 int submenu_2()
 {
