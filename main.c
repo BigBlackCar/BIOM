@@ -35,7 +35,7 @@ typedef enum //varievel grupo tipo enumerado
     seia,
 } numref_tipo;
 
-typedef struct  alimentos //struct que armazena informações sobre os alimentos
+typedef struct  alimentos //struct que armazena informaÃ§Ãµes sobre os alimentos
 {
     int	kcal;
     int	peso;
@@ -44,7 +44,7 @@ typedef struct  alimentos //struct que armazena informações sobre os alimentos
     grupo_tipo grupo;
 } alimento_tipo;
 
-typedef struct pessoas //struct que armazena informações sobre as pessoas
+typedef struct pessoas //struct que armazena informaÃ§Ãµes sobre as pessoas
 {
     int 	peso;
     int 	idade;
@@ -56,25 +56,14 @@ typedef struct pessoas //struct que armazena informações sobre as pessoas
     estilo_tipo estilo;
 } pessoa_tipo;
 
-typedef struct data
-{
-    int ano;
-    int mes;
-    int dia;
-} data_tipo;
-
-typedef struct refeicao
-{
-    int numalim;
-} refeicao_tipo;
 
 typedef struct dieta
 {
     char nomed[26];
-    data_tipo data;
-    numref_tipo tiporef;
+    int data[3];
+    int numref;
     int quantali;
-    refeicao_tipo alim;
+    
     int somakcal;
 } dieta_tipo;
 
@@ -161,7 +150,7 @@ int validar_grupo(int *num)
     return (flag);
 }
 
-void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda não exista
+void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda nÃ£o exista
 {
     if (*qtd < MAX_ALIMENTOS)
     {
@@ -217,7 +206,7 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)// inserir novas pessoas
         printf("Insira o sexo da pessoa(m ou f):");
         scanf("%s", (char *)&pt[*qtd2].sexo);
     }
-    while (((strcmp((char *)&pt[*qtd2].sexo, m)) != 0 ) && ((strcmp((char *)&pt[*qtd2].sexo, f ))!= 0));  //verifica se o sexo é valido
+    while (((strcmp((char *)&pt[*qtd2].sexo, m)) != 0 ) && ((strcmp((char *)&pt[*qtd2].sexo, f ))!= 0));  //verifica se o sexo Ã© valido
     printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo\n");
     scanf("%d", (int *)&pt[*qtd2].estilo);
     switch (pt[*qtd2].estilo)
@@ -245,7 +234,7 @@ void inserir_dietas(dieta_tipo *dt, refeicao_tipo *rt, alimento_tipo *at, int *q
 
     printf("Nome: ");
     scanf(" %[^\n]", dt[i].nomed);
-    //verificação se o nome existe
+    //verificaÃ§Ã£o se o nome existe
     printf("Data da refeicao(dd mm aa): ");
     scanf("%d %d %d",&dt[i].data.dia,&dt[i].data.mes,&dt[i].data.ano);
     system("cls");
@@ -264,9 +253,9 @@ void inserir_dietas(dieta_tipo *dt, refeicao_tipo *rt, alimento_tipo *at, int *q
 }
 
 
-void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refeição atraves de alimentos ingeridos e as respetivas quantidades (TD)
+void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refeiÃ§Ã£o atraves de alimentos ingeridos e as respetivas quantidades (TD)
 {
-    int num, somacal=0, i=0, quant, numalim; //variáveis necessarias para o cálculo
+    int num, somacal=0, i=0, quant, numalim; //variÃ¡veis necessarias para o cÃ¡lculo
 
     do
     {
@@ -314,9 +303,9 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)// eliminar pessoas
     int t=0, flag = 0, max;
     char z[]="zzzzzzz"; //string com valor zzzzzzz
     char *eli;
-    eli = (char *)malloc(sizeof(char) * 80 + 1); //aloca espaço para a string dependendo da quantidade de caracteres inseridos
+    eli = (char *)malloc(sizeof(char) * 80 + 1); //aloca espaÃ§o para a string dependendo da quantidade de caracteres inseridos
     printf("Insira o nome da pessoa que quer eliminar:");
-    scanf(" %[^\n]", eli); //lê o inserido ate a mudança de linha
+    scanf(" %[^\n]", eli); //lÃª o inserido ate a mudanÃ§a de linha
     max = *qtd2;
     do
     {
@@ -334,7 +323,7 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)// eliminar pessoas
     }
     while( t < max );
     if (flag == 0)
-        printf("Nao esta na lista\n\n"); //caso o nome introduzido não esteja na lista, a flag continua em 0 e faz o print
+        printf("Nao esta na lista\n\n"); //caso o nome introduzido nÃ£o esteja na lista, a flag continua em 0 e faz o print
     system("Pause");
 }
 
@@ -382,7 +371,7 @@ void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) // ordenar as pessoas pelo sex
 
     printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
     scanf(" %s", gen);
-    if (gen[0] == 'm' || gen[0] == 'f') //verifica se o genero é valido
+    if (gen[0] == 'm' || gen[0] == 'f') //verifica se o genero Ã© valido
     {
         while (i < *qtd2)
         {
@@ -427,7 +416,7 @@ void sort_structs_by_kcal(alimento_tipo *al, int *len) //ordena as structs por o
     while (changed != 0);
 }
 
-void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabética (Creditos a Scheneizer do 1º ano de informática)
+void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabÃ©tica (Creditos a Scheneizer do 1Âº ano de informÃ¡tica)
 {
     int 		i, changed; //variavel numerica e variavel que funciona como uma flag
     alimento_tipo	temp;
@@ -733,7 +722,7 @@ int	submenu_1(int *qtd2, pessoa_tipo *pt)
 
 int	main(void)
 {
-    int		qtd = 0, qtd2 = 0; //variáveis utilizadas ao longo de todo o programa
+    int		qtd = 0, qtd2 = 0; //variÃ¡veis utilizadas ao longo de todo o programa
     char		op;
     pessoa_tipo	    pt[MAX_PESSOAS];
     alimento_tipo	al[MAX_ALIMENTOS];
