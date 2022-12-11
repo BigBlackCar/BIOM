@@ -26,16 +26,8 @@ typedef enum //variavel grupo tipo enumerado
     horticulas,
 } grupo_tipo;
 
-typedef enum //varievel grupo tipo enumerado
-{
-    pequeno_almoco=0,
-    almoco,
-    lanche,
-    jantar,
-    seia,
-} numref_tipo;
 
-typedef struct  alimentos //struct que armazena informa√ß√µes sobre os alimentos
+typedef struct  alimentos //struct que armazena informaÁıes sobre os alimentos
 {
     int	kcal;
     int	peso;
@@ -44,7 +36,7 @@ typedef struct  alimentos //struct que armazena informa√ß√µes sobre os alimentos
     grupo_tipo grupo;
 } alimento_tipo;
 
-typedef struct pessoas //struct que armazena informa√ß√µes sobre as pessoas
+typedef struct pessoas //struct que armazena informaÁıes sobre as pessoas
 {
     int 	peso;
     int 	idade;
@@ -57,14 +49,15 @@ typedef struct pessoas //struct que armazena informa√ß√µes sobre as pessoas
 } pessoa_tipo;
 
 
+
 typedef struct dieta
 {
     char nomed[26];
-    int data[3];
-    int numref;
-    int quantali;
-    
+    int data[3];  //comment
     int somakcal;
+    int quantalim[5];
+    char limao[MAX_ALIMENTOS][5][69];  //comentario
+    int dietakcal;
 } dieta_tipo;
 
 
@@ -150,7 +143,7 @@ int validar_grupo(int *num)
     return (flag);
 }
 
-void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda n√£o exista
+void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda n„o exista
 {
     if (*qtd < MAX_ALIMENTOS)
     {
@@ -206,7 +199,7 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)// inserir novas pessoas
         printf("Insira o sexo da pessoa(m ou f):");
         scanf("%s", (char *)&pt[*qtd2].sexo);
     }
-    while (((strcmp((char *)&pt[*qtd2].sexo, m)) != 0 ) && ((strcmp((char *)&pt[*qtd2].sexo, f ))!= 0));  //verifica se o sexo √© valido
+    while (((strcmp((char *)&pt[*qtd2].sexo, m)) != 0 ) && ((strcmp((char *)&pt[*qtd2].sexo, f ))!= 0));  //verifica se o sexo È valido
     printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo\n");
     scanf("%d", (int *)&pt[*qtd2].estilo);
     switch (pt[*qtd2].estilo)
@@ -227,35 +220,146 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)// inserir novas pessoas
     *qtd2 = *qtd2 + 1;
 }
 
-void inserir_dietas(dieta_tipo *dt, refeicao_tipo *rt, alimento_tipo *at, int *qtd3)
+void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
 {
 
-    int i;
+    int i, j, k, somakcal = 0;
+
+    *qtd3+= 1;
 
     printf("Nome: ");
-    scanf(" %[^\n]", dt[i].nomed);
-    //verifica√ß√£o se o nome existe
+    scanf(" %[^\n]", dt[*qtd3].nomed);
+    //verificaÁ„o se o nome existe
     printf("Data da refeicao(dd mm aa): ");
-    scanf("%d %d %d",&dt[i].data.dia,&dt[i].data.mes,&dt[i].data.ano);
+    scanf("%d %d %d",&dt[*qtd3].data[0],&dt[*qtd3].data[1],&dt[*qtd3].data[2]);
     system("cls");
-    printf("Pequeno Almoco\n");
+
+    printf("Pequeno Almoco\n\n");
+    i = 0;
+
     printf("Quantidade de alimentos que ingeriu: ");
-    scanf("%d",&dt[*qtd3].quantali);
-    do
+    scanf("%d",&dt[*qtd3].quantalim[0]);
+
+    if( dt[*qtd3].quantalim[0] != 0)
     {
-        printf("Nome do alimento que ingeriu:");
-        scanf("")
+
+        while (i < dt[*qtd3].quantalim[0])
+        {
+            printf("Nome do alimento que ingeriu:");
+            scanf(" %[^\n]",&dt[*qtd3].limao[0][i]);
+            j = 0;
+            while (j < *qtd3)
+            {
+                if (strcmp(dt[*qtd3].limao[0][i],at[j].nome) == 0)
+                {
+                    k = j;
+                    somakcal = somakcal + at[k].kcal;
+                }
+                j++;
+
+            }
+            i++;
+
+        }
+
+    }
+
+    printf("%d",somakcal);
+    system("Pause");
+
+
+    system("cls");
+
+    printf("Almoco\n\n");
+    i = 0;
+
+    printf("Quantidade de alimentos que ingeriu: ");
+    scanf("%d",&dt[*qtd3].quantalim[1]);
+
+    if( dt[*qtd3].quantalim[1] != 0)
+    {
+
+        while (i < dt[*qtd3].quantalim[1])
+        {
+            printf("Nome do alimento que ingeriu:");
+            scanf(" %[^\n]",&dt[*qtd3].limao[1][i]);
+            i++;
+
+        }
+
+    }
+    system("cls");
+
+    printf("Lanche\n\n");
+    i = 0;
+
+    printf("Quantidade de alimentos que ingeriu: ");
+    scanf("%d",&dt[*qtd3].quantalim[2]);
+
+    if( dt[*qtd3].quantalim[2] != 0)
+    {
+
+        while (i < dt[*qtd3].quantalim[2])
+        {
+            printf("Nome do alimento que ingeriu:");
+            scanf(" %[^\n]",&dt[*qtd3].limao[2][i]);
+            i++;
+
+        }
+
+    }
+
+    system("cls");
+
+    printf("Jantar\n\n");
+    i = 0;
+
+    printf("Quantidade de alimentos que ingeriu: ");
+    scanf("%d",&dt[*qtd3].quantalim[3]);
+
+    if( dt[*qtd3].quantalim[3] != 0)
+    {
+
+        while (i < dt[*qtd3].quantalim[3])
+        {
+            printf("Nome do alimento que ingeriu:");
+            scanf(" %[^\n]",&dt[*qtd3].limao[3][i]);
+            i++;
+
+        }
+
+    }
+
+    system("cls");
+
+    printf("Seia\n\n");
+    i = 0;
+
+    printf("Quantidade de alimentos que ingeriu: ");
+    scanf("%d",&dt[*qtd3].quantalim[4]);
+
+    if( dt[*qtd3].quantalim[4] != 0)
+    {
+
+        while (i < dt[*qtd3].quantalim[4])
+        {
+            printf("Nome do alimento que ingeriu:");
+            scanf(" %[^\n]",&dt[*qtd3].limao[4][i]);
+            i++;
+
+        }
+
     }
 
 
 
-        system("Pause");
+    system("Pause");
 }
 
 
-void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refei√ß√£o atraves de alimentos ingeridos e as respetivas quantidades (TD)
+void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refeiÁ„o atraves de alimentos ingeridos e as respetivas quantidades (TD)
 {
-    int num, somacal=0, i=0, quant, numalim; //vari√°veis necessarias para o c√°lculo
+    int num, somacal=0, i=0, quant, numalim; //vari·veis necessarias para o c·lculo
 
     do
     {
@@ -303,9 +407,9 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)// eliminar pessoas
     int t=0, flag = 0, max;
     char z[]="zzzzzzz"; //string com valor zzzzzzz
     char *eli;
-    eli = (char *)malloc(sizeof(char) * 80 + 1); //aloca espa√ßo para a string dependendo da quantidade de caracteres inseridos
+    eli = (char *)malloc(sizeof(char) * 80 + 1); //aloca espaÁo para a string dependendo da quantidade de caracteres inseridos
     printf("Insira o nome da pessoa que quer eliminar:");
-    scanf(" %[^\n]", eli); //l√™ o inserido ate a mudan√ßa de linha
+    scanf(" %[^\n]", eli); //lÍ o inserido ate a mudanÁa de linha
     max = *qtd2;
     do
     {
@@ -323,7 +427,7 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)// eliminar pessoas
     }
     while( t < max );
     if (flag == 0)
-        printf("Nao esta na lista\n\n"); //caso o nome introduzido n√£o esteja na lista, a flag continua em 0 e faz o print
+        printf("Nao esta na lista\n\n"); //caso o nome introduzido n„o esteja na lista, a flag continua em 0 e faz o print
     system("Pause");
 }
 
@@ -371,7 +475,7 @@ void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) // ordenar as pessoas pelo sex
 
     printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
     scanf(" %s", gen);
-    if (gen[0] == 'm' || gen[0] == 'f') //verifica se o genero √© valido
+    if (gen[0] == 'm' || gen[0] == 'f') //verifica se o genero È valido
     {
         while (i < *qtd2)
         {
@@ -416,7 +520,7 @@ void sort_structs_by_kcal(alimento_tipo *al, int *len) //ordena as structs por o
     while (changed != 0);
 }
 
-void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfab√©tica (Creditos a Scheneizer do 1¬∫ ano de inform√°tica)
+void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabÈtica (Creditos a Scheneizer do 1∫ ano de inform·tica)
 {
     int 		i, changed; //variavel numerica e variavel que funciona como uma flag
     alimento_tipo	temp;
@@ -542,10 +646,9 @@ void necessidade_energetica(int somakcaltot)
   return flag;
 }*/
 
-int	submenu_3(int *qtd2, int *qtd, pessoa_tipo *pl,alimento_tipo *at,dieta_tipo *dt,refeicao_tipo *rt)
+int	submenu_3(int *qtd2, int *qtd, pessoa_tipo *pl,alimento_tipo *at,dieta_tipo *dt, int *qtd3)
 {
     char    op;
-    int qtd3 = 0;
     do
     {
         do
@@ -567,14 +670,14 @@ int	submenu_3(int *qtd2, int *qtd, pessoa_tipo *pl,alimento_tipo *at,dieta_tipo 
         case '1':
 
             system("cls");
-            inserir_dietas(dt,rt,at,&qtd3);
+            inserir_dietas(dt,at,qtd3);
             break;
 
-        /*case '2':
+            /*case '2':
 
-            system("cls");
-            listar_dietas_fora_do_padrao(dt,rt,&qtd3);
-            break;*/
+                system("cls");
+                listar_dietas_fora_do_padrao(dt,rt,&qtd3);
+                break;*/
 
             /*case '3':
 
@@ -603,7 +706,7 @@ int	submenu_2(int *qtd, alimento_tipo *al)
     int		escolha;
     char 		op;
 
-    inicializar_alimentos(al,qtd);
+
     do
     {
         do
@@ -722,12 +825,14 @@ int	submenu_1(int *qtd2, pessoa_tipo *pt)
 
 int	main(void)
 {
-    int		qtd = 0, qtd2 = 0; //vari√°veis utilizadas ao longo de todo o programa
+    int		qtd = 0, qtd2 = 0, qtd3 = 0; //vari·veis utilizadas ao longo de todo o programa
     char		op;
     pessoa_tipo	    pt[MAX_PESSOAS];
     alimento_tipo	al[MAX_ALIMENTOS];
     dieta_tipo      dt[MAX_DIETAS];
-    refeicao_tipo   rt[MAX_REFEICOES];
+
+    inicializar_alimentos(al,&qtd);
+
 
     do
     {
@@ -755,7 +860,7 @@ int	main(void)
             break;
 
         case '3':
-            submenu_3(&qtd2,&qtd,pt,al,dt,rt);
+            submenu_3(&qtd2,&qtd,pt,al,dt,&qtd3);
             break;
         }
     }
