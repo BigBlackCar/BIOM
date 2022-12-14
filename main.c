@@ -5,7 +5,6 @@
 # define MAX_ALIMENTOS 10
 # define MAX_PESSOAS 10
 # define MAX_DIETAS 10
-# define MAX_REFEICOES 10
 
 typedef enum //varievel grupo tipo enumerado
 {
@@ -27,7 +26,7 @@ typedef enum //variavel grupo tipo enumerado
 } grupo_tipo;
 
 
-typedef struct  alimentos //struct que armazena informações sobre os alimentos
+typedef struct  alimentos //struct que armazena informaÃ§Ãµes sobre os alimentos
 {
     int	kcal;
     int	peso;
@@ -36,13 +35,13 @@ typedef struct  alimentos //struct que armazena informações sobre os alimentos
     grupo_tipo grupo;
 } alimento_tipo;
 
-typedef struct pessoas //struct que armazena informações sobre as pessoas
+typedef struct pessoas //struct que armazena informaÃ§Ãµes sobre as pessoas
 {
     int 	peso;
     int 	idade;
     int 	altura;
     char 	est[30];
-    char 	sexo[30];
+    char 	sexo[2];
     char 	nome[100];
     float 	imc;
     estilo_tipo estilo;
@@ -53,11 +52,16 @@ typedef struct pessoas //struct que armazena informações sobre as pessoas
 typedef struct dieta
 {
     char nomed[26];
-    int data[3];  //comment
+    int data[4];  //comment
     int somakcal;
     int quantalim[5];
-    char limao[MAX_ALIMENTOS][5][69];  //comentario
+    char limao[5][MAX_DIETAS][26];  //comentario
     int dietakcal;
+    char sexo[2];
+    char estilovida[30];
+    int tabela;
+    int datasecs;
+
 } dieta_tipo;
 
 
@@ -98,7 +102,7 @@ void	inicializar_alimentos(alimento_tipo *al, int *qtd) //adiciona os alimentos 
 
 void	inicializar_pessoas(pessoa_tipo pt[], int *qtd2) //adiciona as pessoas base ao programa
 {
-    strcpy(pt[0].nome,"Cristiano Diniz");
+    strcpy(pt[0].nome,"a");//"Cristiano Diniz");
     pt[0].peso=72;
     pt[0].altura=172;
     pt[0].idade=18;
@@ -143,7 +147,7 @@ int validar_grupo(int *num)
     return (flag);
 }
 
-void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda não exista
+void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo alimento que ainda nÃ£o exista
 {
     if (*qtd < MAX_ALIMENTOS)
     {
@@ -181,6 +185,20 @@ void inserir_alimentos(alimento_tipo *al, int *qtd)  //permite adicionar um novo
     system("Pause");
 }
 
+void verficar_sexo(pessoa_tipo *pt, int *qtd2)
+{
+    char f[]="f";
+    char m[]="m";
+    do
+    {
+        printf("Insira o sexo da pessoa(m ou f):");
+        scanf("%s", (char *)&pt[*qtd2].sexo);
+    }
+    while (((strcmp((char *)&pt[*qtd2].sexo, m)) != 0 ) && ((strcmp((char *)&pt[*qtd2].sexo, f ))!= 0));
+
+
+}
+
 void inserir_pessoas(pessoa_tipo *pt, int *qtd2)// inserir novas pessoas
 {
     char f[]="f";
@@ -194,12 +212,9 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)// inserir novas pessoas
     printf("Insira a idade da pessoa:");
     scanf("%d", &pt[*qtd2].idade);
     pt[*qtd2].imc = pt[*qtd2].peso / ((pt[*qtd2].altura*(0.01)) * (pt[*qtd2].altura*(0.01)));
-    do
-    {
-        printf("Insira o sexo da pessoa(m ou f):");
-        scanf("%s", (char *)&pt[*qtd2].sexo);
-    }
-    while (((strcmp((char *)&pt[*qtd2].sexo, m)) != 0 ) && ((strcmp((char *)&pt[*qtd2].sexo, f ))!= 0));  //verifica se o sexo é valido
+
+    verficar_sexo(pt,qtd2);
+
     printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo\n");
     scanf("%d", (int *)&pt[*qtd2].estilo);
     switch (pt[*qtd2].estilo)
@@ -220,16 +235,215 @@ void inserir_pessoas(pessoa_tipo *pt, int *qtd2)// inserir novas pessoas
     *qtd2 = *qtd2 + 1;
 }
 
-void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
+void validar_data(dieta_tipo *dt, alimento_tipo *at, int *qtd3, int *qtd)
 {
 
-    int i, j, k, somakcal = 0;
+    if(dt[*qtd3].data[0]>31 || dt[*qtd3].data[0]<1)
+    {
+        do
+        {
+            printf("Data da refeicao(dd mm aa): ");
+            scanf("%d %d %d",&dt[*qtd3].data[0],&dt[*qtd3].data[1],&dt[*qtd3].data[2]);
+        }
+        while(dt[*qtd3].data[0]>31 || dt[*qtd3].data[0]<1);
+    }
 
-    *qtd3+= 1;
+    if(dt[*qtd3].data[1]>12 || dt[*qtd3].data[1]<1)
+    {
+        do
+        {
+            printf("Data da refeicao(dd mm aa): ");
+            scanf("%d %d %d",&dt[*qtd3].data[0],&dt[*qtd3].data[1],&dt[*qtd3].data[2]);
+        }
+        while(dt[*qtd3].data[1]>12 || dt[*qtd3].data[0]<1);
+    }
 
-    printf("Nome: ");
-    scanf(" %[^\n]", dt[*qtd3].nomed);
-    //verificação se o nome existe
+    if(dt[*qtd3].data[2]>2022 || dt[*qtd3].data[2]<1)
+    {
+        do
+        {
+            printf("Data da refeicao(dd mm aa): ");
+            scanf("%d %d %d",&dt[*qtd3].data[0],&dt[*qtd3].data[1],&dt[*qtd3].data[2]);
+        }
+        while(dt[*qtd3].data[2]>2022 || dt[*qtd3].data[2]<1);
+    }
+
+}
+
+void mostrar_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3, int *qtd)//mostra todas as pessoas ja inseridas no sistema
+{
+    int i;
+    int j;
+    j=0;
+    i=0;
+    do
+    {
+
+        printf("\n\nNome:%s", dt[i].nomed);
+        printf("\nData:%d %d %d\n", dt[i].data[0],dt[i].data[1],dt[i].data[2]);
+
+        printf("\nPequeno AlmoÃ§o");
+        do
+        {
+            printf("\nAlimento:%s\n", dt[i].limao[0][j]);
+            j++;
+
+        }
+        while(j<dt[*qtd3].quantalim[0]);
+
+        printf("\nAlmoÃ§o");
+        j=0;
+        do
+        {
+
+            printf("\nAlimento:%s\n", dt[i].limao[1][j]);
+            j++;
+
+        }
+        while(j<dt[*qtd3].quantalim[1]);
+
+        printf("\nLanche");
+        j=0;
+        do
+        {
+            j=0;
+            printf("\nAlimento:%s\n", dt[i].limao[2][j]);
+            j++;
+
+        }
+        while(j<dt[*qtd3].quantalim[2]);
+
+        printf("\nJantar");
+        j=0;
+        do
+        {
+            j=0;
+            printf("\nAlimento:%s\n", dt[i].limao[3][j]);
+            j++;
+
+        }
+        while(j<dt[*qtd3].quantalim[3]);
+
+        printf("\nSeia");
+        j=0;
+
+        do
+        {
+            j=0;
+            printf("\nAlimento:%s\n", dt[i].limao[4][j]);
+            j++;
+
+        }
+        while(j<dt[*qtd3].quantalim[4]);
+
+
+        i++;
+    }
+    while(i < *qtd3);
+
+    system("Pause");
+}
+
+void ordenar_data(dieta_tipo *dt, alimento_tipo *at, int *qtd3, int *qtd)
+{
+
+    int i;
+    int a;
+    a=0;
+    for(i=0; i < *qtd3; i++)
+    {
+
+        if(dt[i].data[2] > dt[i+1].data[2])
+        {
+
+            a = dt[i+1].data[2];
+            dt[i+1].data[2] = dt[i].data[2];
+            dt[i].data[2] = a;
+        }
+    }
+}
+
+
+void verificar_grupo(alimento_tipo *al, int *qtd)
+{
+
+    do
+    {
+        if(al[*qtd].grupo>7)
+        {
+            printf("Grupo=");
+            scanf("%d", (int *)&al[*qtd].grupo);
+        }
+    }
+    while(al[*qtd].grupo>7);
+
+
+}
+
+
+
+
+void verificar_estilo(pessoa_tipo *pt, int *qtd2)
+{
+    if(pt[*qtd2].estilo>4)
+    {
+        do
+        {
+
+            printf("Insira o estilo de vida da pessoa: \n1-Sedentario\n2-Pouco ativo\n3-Ativo\n4-Muito ativo\n");
+            scanf("%d", (int *)&pt[*qtd2].estilo);
+            printf("%d", pt[*qtd2].estilo);
+        }
+        while((pt[*qtd2].estilo)>4);
+        switch (pt[*qtd2].estilo)
+        {
+        case 1:
+            strcpy(pt[*qtd2].est,"Sedentario");
+            break;
+        case 2:
+            strcpy(pt[*qtd2].est,"Pouco ativo");
+            break;
+        case 3:
+            strcpy(pt[*qtd2].est,"Ativo");
+            break;
+        case 4:
+            strcpy(pt[*qtd2].est,"Muito ativo");
+            break;
+        }
+    }
+    else
+        system("Pause");
+}
+
+void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3, int *qtd, pessoa_tipo *pt, int *qtd2)
+{
+
+    int i, j, k, l, somakcal = 0, a = 1;
+
+
+
+    while (a != 0)
+    {
+
+        printf("Nome: ");
+        scanf(" %[^\n]", dt[*qtd3].nomed);
+
+        l = 0;
+
+        while (l < *qtd2)
+        {
+            a = strcmp(dt[*qtd3].nomed,pt[l].nome);
+
+            if ( a == 0)
+                break;
+
+            l++;
+        }
+    }
+
+    strcpy(dt[*qtd3].sexo, pt[l].sexo);
+    strcpy(dt[*qtd3].estilovida, pt[l].est);
+
     printf("Data da refeicao(dd mm aa): ");
     scanf("%d %d %d",&dt[*qtd3].data[0],&dt[*qtd3].data[1],&dt[*qtd3].data[2]);
     system("cls");
@@ -248,7 +462,7 @@ void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
             printf("Nome do alimento que ingeriu:");
             scanf(" %[^\n]",&dt[*qtd3].limao[0][i]);
             j = 0;
-            while (j < *qtd3)
+            while (j < *qtd)
             {
                 if (strcmp(dt[*qtd3].limao[0][i],at[j].nome) == 0)
                 {
@@ -263,9 +477,6 @@ void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
         }
 
     }
-
-    printf("%d",somakcal);
-    system("Pause");
 
 
     system("cls");
@@ -283,6 +494,17 @@ void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
         {
             printf("Nome do alimento que ingeriu:");
             scanf(" %[^\n]",&dt[*qtd3].limao[1][i]);
+            j = 0;
+            while (j < *qtd)
+            {
+                if (strcmp(dt[*qtd3].limao[0][i],at[j].nome) == 0)
+                {
+                    k = j;
+                    somakcal = somakcal + at[k].kcal;
+                }
+                j++;
+
+            }
             i++;
 
         }
@@ -303,6 +525,17 @@ void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
         {
             printf("Nome do alimento que ingeriu:");
             scanf(" %[^\n]",&dt[*qtd3].limao[2][i]);
+            j = 0;
+            while (j < *qtd)
+            {
+                if (strcmp(dt[*qtd3].limao[0][i],at[j].nome) == 0)
+                {
+                    k = j;
+                    somakcal = somakcal + at[k].kcal;
+                }
+                j++;
+
+            }
             i++;
 
         }
@@ -324,6 +557,17 @@ void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
         {
             printf("Nome do alimento que ingeriu:");
             scanf(" %[^\n]",&dt[*qtd3].limao[3][i]);
+            j = 0;
+            while (j < *qtd)
+            {
+                if (strcmp(dt[*qtd3].limao[0][i],at[j].nome) == 0)
+                {
+                    k = j;
+                    somakcal = somakcal + at[k].kcal;
+                }
+                j++;
+
+            }
             i++;
 
         }
@@ -345,21 +589,34 @@ void inserir_dietas(dieta_tipo *dt, alimento_tipo *at, int *qtd3)
         {
             printf("Nome do alimento que ingeriu:");
             scanf(" %[^\n]",&dt[*qtd3].limao[4][i]);
+            j = 0;
+            while (j < *qtd)
+            {
+                if (strcmp(dt[*qtd3].limao[0][i],at[j].nome) == 0)
+                {
+                    k = j;
+                    somakcal = somakcal + at[k].kcal;
+                }
+                j++;
+
+            }
             i++;
 
         }
 
     }
 
+    dt[*qtd3].dietakcal = somakcal;
 
+    *qtd3+= 1;
 
     system("Pause");
 }
 
 
-void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refeição atraves de alimentos ingeridos e as respetivas quantidades (TD)
+void estimar_valor_kcal(alimento_tipo *al)  //calcula as calorias de uma refeiÃ§Ã£o atraves de alimentos ingeridos e as respetivas quantidades (TD)
 {
-    int num, somacal=0, i=0, quant, numalim; //variáveis necessarias para o cálculo
+    int somacal=0, i=0, quant, numalim; //variÃ¡veis necessarias para o cÃ¡lculo
 
     do
     {
@@ -407,9 +664,9 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)// eliminar pessoas
     int t=0, flag = 0, max;
     char z[]="zzzzzzz"; //string com valor zzzzzzz
     char *eli;
-    eli = (char *)malloc(sizeof(char) * 80 + 1); //aloca espaço para a string dependendo da quantidade de caracteres inseridos
+    eli = (char *)malloc(sizeof(char) * 80 + 1); //aloca espaÃ§o para a string dependendo da quantidade de caracteres inseridos
     printf("Insira o nome da pessoa que quer eliminar:");
-    scanf(" %[^\n]", eli); //lê o inserido ate a mudança de linha
+    scanf(" %[^\n]", eli); //lÃª o inserido ate a mudanÃ§a de linha
     max = *qtd2;
     do
     {
@@ -427,7 +684,7 @@ void eliminar_pessoas(pessoa_tipo *pt, int *qtd2)// eliminar pessoas
     }
     while( t < max );
     if (flag == 0)
-        printf("Nao esta na lista\n\n"); //caso o nome introduzido não esteja na lista, a flag continua em 0 e faz o print
+        printf("Nao esta na lista\n\n"); //caso o nome introduzido nÃ£o esteja na lista, a flag continua em 0 e faz o print
     system("Pause");
 }
 
@@ -475,7 +732,7 @@ void ordenar_pessoas(pessoa_tipo pt[], int *qtd2) // ordenar as pessoas pelo sex
 
     printf("Insira de que sexo sao as pessoas que quer apresentar(m ou f):");
     scanf(" %s", gen);
-    if (gen[0] == 'm' || gen[0] == 'f') //verifica se o genero é valido
+    if (gen[0] == 'm' || gen[0] == 'f') //verifica se o genero Ã© valido
     {
         while (i < *qtd2)
         {
@@ -520,7 +777,7 @@ void sort_structs_by_kcal(alimento_tipo *al, int *len) //ordena as structs por o
     while (changed != 0);
 }
 
-void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabética (Creditos a Scheneizer do 1º ano de informática)
+void sort_structs(alimento_tipo *al, int *len) //Organiza as structs por ordem alfabÃ©tica (Creditos a Scheneizer do 1Âº ano de informÃ¡tica)
 {
     int 		i, changed; //variavel numerica e variavel que funciona como uma flag
     alimento_tipo	temp;
@@ -586,6 +843,201 @@ int listar_grupo(void) //escolher o numero do grupo que sera listado
     return (escolha);
 }
 
+void listar_dieta_fora_padrao(dieta_tipo *dt, alimento_tipo *at, int *qtd3, int *qtd, pessoa_tipo *pt, int *qtd2)
+{
+    int i = 0, j = 0;
+    char m[] ="m";
+    char f[]="f";
+    char se[]="Sedentario";
+    char pa[]="Pouco ativo";
+    char ati[]="Ativo";
+    char ma[]="Muito ativo";
+
+
+    while ( i < *qtd3 )
+    {
+        if (strcmp(dt[i].sexo,m) == 0)
+        {
+            if (strcmp(dt[i].estilovida,se) == 0)
+                dt[i].tabela = 5;
+            if (strcmp(dt[i].estilovida,pa) == 0)
+                dt[i].tabela = 6;
+            if (strcmp(dt[i].estilovida,ati) == 0)
+                dt[i].tabela = 7;
+            if (strcmp(dt[i].estilovida,ma) == 0)
+                dt[i].tabela = 8;
+        }
+
+        if (strcmp(dt[i].sexo,f) == 0)
+        {
+            if (strcmp(dt[i].estilovida,se) == 0)
+                dt[i].tabela = 1;
+            if (strcmp(dt[i].estilovida,pa) == 0)
+                dt[i].tabela = 2;
+            if (strcmp(dt[i].estilovida,ati) == 0)
+                dt[i].tabela = 3;
+            if (strcmp(dt[i].estilovida,ma) == 0)
+                dt[i].tabela = 4;
+        }
+
+        i++;
+    }
+
+
+
+    printf("POR EXCESSO\n\n");
+
+    while ( j < *qtd3)
+    {
+        if ( (dt[j].dietakcal > 2683) && (dt[j].tabela == 4) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 2683 );
+        }
+        if ( (dt[j].dietakcal > 2415) && (dt[j].tabela == 3) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 2415 );
+        }
+        if ( (dt[j].dietakcal > 2147) && (dt[j].tabela == 1) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 2147 );
+        }
+        if ( (dt[j].dietakcal > 1878) && (dt[j].tabela == 1) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 1878 );
+        }
+        if ( (dt[j].dietakcal > 3340) && (dt[j].tabela == 8) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 3340 );
+        }
+        if ( (dt[j].dietakcal > 3006) && (dt[j].tabela == 7) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 3006 );
+        }
+        if ( (dt[j].dietakcal > 2672) && (dt[j].tabela == 6) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 2672 );
+        }
+        if ( (dt[j].dietakcal > 2338) && (dt[j].tabela == 5) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Excesso de calorias: %d\n\n", dt[j].dietakcal - 2338 );
+        }
+
+
+        j++;
+    }
+
+    j = 0;
+
+    printf("POR DEFEITO\n\n");
+
+    while ( j < *qtd3)
+    {
+        if ( (dt[j].dietakcal < 2683) && (dt[j].tabela == 4) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 2683 );
+        }
+        if ( (dt[j].dietakcal < 2415) && (dt[j].tabela == 3) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 2415 );
+        }
+        if ( (dt[j].dietakcal < 2147) && (dt[j].tabela == 1) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 2147 );
+        }
+        if ( (dt[j].dietakcal < 1878) && (dt[j].tabela == 1) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 1878 );
+        }
+        if ( (dt[j].dietakcal < 3340) && (dt[j].tabela == 8) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 3340 );
+        }
+        if ( (dt[j].dietakcal < 3006) && (dt[j].tabela == 7) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 3006 );
+        }
+        if ( (dt[j].dietakcal < 2672) && (dt[j].tabela == 6) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 2672 );
+        }
+        if ( (dt[j].dietakcal < 2338) && (dt[j].tabela == 5) )
+        {
+            printf("Nome: %s\n",dt[j].nomed);
+            printf("Data %d/%d/%d\n",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+            printf("Kcal da dieta: %d\n",dt[j].dietakcal);
+            printf("Estilo de vida: %s\n",dt[j].estilovida);
+            printf("Defeito de calorias: %d\n\n", dt[j].dietakcal - 2338 );
+        }
+
+
+        j++;
+    }
+
+    printf("\n\n");
+
+    system("Pause");
+}
+
 void mostrar_tabela(alimento_tipo *al, int *qtd, int escolha)  //mostra a tabela com os alimentos do grupo escolhido e kcal por ordem decrescente
 {
     printf("_________________________________\n");
@@ -612,24 +1064,143 @@ void necessidade_energetica(int somakcaltot)
     system("Pause");
 }
 
-
-/*void listar_dietas_fora_do_padrao(dieta_tipo *dt, refeicao_tipo *rt, pessoa_dieta_tipo *pdt, int *qtd3)
+int validar_datas_procura(int d1, int d2, int m1, int m2, int a1, int a2)
 {
-    int i = 0, somakcaltot = 0;
+    int flag = 0;
 
-    for (i; i < *qtd3; i++)
+    if (a1 < a2)
+        flag = 1;
+    if ((a1 == a2) && (m1 < m2))
+        flag = 1;
+    if( (a1 == a2) && (m1 == m2) && (d1 < d2))
+        flag = 1;
+    if (flag == 0)
     {
-        somakcaltot = pdt[i].dieta.somakcal + somakcaltot;
-        necessidade_energetica(somakcaltot);
+        printf("\nDatas Invalidas!\n");
+        system("Pause");
+        system("cls");
+    }
+
+    return flag;
+}
+
+void listar_dietas_iguais(dieta_tipo *dt, pessoa_tipo *pt, int *qtd3)
+{
+    int d1, d2, m1, m2, a1, a2, i = 0, flag = 0, j = 0, k = 0, maior, menor;
+
+    do
+    {
+        printf("Procurar dietas iguais entre a data 1 dd/mm/aa/ e  a data 2 dd/mm/aa\n\n");
+        printf("Data 1: ");
+        scanf("%d %d %d",&d1,&m1,&a1);
+        printf("\nData 2: ");
+        scanf("%d %d %d",&d2,&m2,&a2);
+
+        flag = validar_datas_procura(d1,d2,m1,m2,a1,a2);
+    }
+    while (flag != 1);
+
+    menor = a1 * 31557600 + m1 * 2629800 + d1 * 86400;
+    maior = a2 * 31557600 + m2 * 2629800 + d2 * 86400;
+
+
+    system("Pause");
+
+    while ( i < *qtd3)
+    {
+        dt[i].datasecs = dt[i].data[2] * 31557600 + dt[i].data[1] * 2629800 + dt[i].data[0] * 86400;
+
+        i++;
     }
 
 
+    while ( j < *qtd3)
+    {
+        if ((dt[j].datasecs > menor) && (dt[j].datasecs < maior))
+        {
+            while (k < *qtd3)
+            {
+                if (( dt[k].datasecs > menor) && (dt[k].datasecs < menor) && (dt[k].dietakcal == dt[j].dietakcal))
+                {
+                    printf("\nNome: %s",dt[j].nomed);
+                    printf("\nSexo: %s",dt[j].sexo);
+                    printf("\nEstilo de vida: %s",dt[j].estilovida);
+                    printf("\nData da dieta: %d/%d/%d",dt[j].data[0],dt[i].data[1],dt[i].data[2]);
+                    printf("\nCalorias ingeridas: %d",dt[j].dietakcal);
+
+                    printf("\nDieta semelhante a...\n");
+
+                    printf("\nNome: %s",dt[k].nomed);
+                    printf("\nSexo: %s",dt[k].sexo);
+                    printf("\nEstilo de vida: %s",dt[k].estilovida);
+                    printf("\nData da dieta: %d/%d/%d",dt[k].data[0],dt[j].data[1],dt[j].data[2]);
+                    printf("\nCalorias ingeridas: %d",dt[k].dietakcal);
+                }
+
+                k++;
+            }
+        }
+
+        j++;
+    }
+
+
+    /*flag = 0;
+
+
+    while (i < *qtd3)
+    {
+        while (j + 1 < *qtd3)
+        {
+            if ((dt[i].dietakcal == dt[j].dietakcal) && (i != j))
+            {
+                if (dt[i].data[2] > dt[j].data[2])
+                {
+                    maior = dt[i].data[2];
+                    menor = dt[j].data[2];
+                }
+                else
+                {
+                    menor = dt[i].data[2];
+                    maior = dt[j].data[2];
+                }
+
+                if ((maior > a1) && (menor < a2) && (maior != menor))
+                {
+                    printf("\nNome: %s",dt[i].nomed);
+                    printf("\nSexo: %s",dt[i].sexo);
+                    printf("\nEstilo de vida: %s",dt[i].estilovida);
+                    printf("\nData da dieta: %d/%d/%d",dt[i].data[0],dt[i].data[1],dt[i].data[2]);
+                    printf("\nCalorias ingeridas: %d",dt[i].dietakcal);
+
+                    printf("\nDieta semelhante a...\n");
+
+                    printf("\nNome: %s",dt[j].nomed);
+                    printf("\nSexo: %s",dt[j].sexo);
+                    printf("\nEstilo de vida: %s",dt[j].estilovida);
+                    printf("\nData da dieta: %d/%d/%d",dt[j].data[0],dt[j].data[1],dt[j].data[2]);
+                    printf("\nCalorias ingeridas: %d",dt[j].dietakcal);
 
 
 
-    //for (i; i < dt[i].numdieta)
+
+                }
+
+
+            }
+
+
+
+            j++;
+        }
+        i++;
+    }*/
+
+
+
     system("Pause");
-}*/
+}
+
 
 /*int validar_nome_alimento(alimento_tipo at, int *qtd, alimento_tipo *nomealim)
 {
@@ -646,7 +1217,7 @@ void necessidade_energetica(int somakcaltot)
   return flag;
 }*/
 
-int	submenu_3(int *qtd2, int *qtd, pessoa_tipo *pl,alimento_tipo *at,dieta_tipo *dt, int *qtd3)
+int	submenu_3(int *qtd2, int *qtd, pessoa_tipo *pt, alimento_tipo *at,dieta_tipo *dt, int *qtd3)
 {
     char    op;
     do
@@ -670,27 +1241,28 @@ int	submenu_3(int *qtd2, int *qtd, pessoa_tipo *pl,alimento_tipo *at,dieta_tipo 
         case '1':
 
             system("cls");
-            inserir_dietas(dt,at,qtd3);
+            inserir_dietas(dt,at,qtd3,qtd,pt,qtd2);
             break;
 
-            /*case '2':
+        case '2':
 
-                system("cls");
-                listar_dietas_fora_do_padrao(dt,rt,&qtd3);
-                break;*/
+            system("cls");
+            listar_dieta_fora_padrao(dt,at,qtd3,qtd,pt,qtd2);
+            break;
 
-            /*case '3':
+        case '3':
 
-                system("cls");
-                ordenar_pessoas(pt,qtd2);
-                system("PAUSE");
-                break;
+            system("cls");
+            listar_dietas_iguais(dt,pt,qtd3);
+            system("PAUSE");
+            break;
 
-            case '4':
+        case '4':
 
-                system("cls");
-                listar_dietas_fora_do_padrao(dt,rt,pdt,&qtd3);
-                break;*/
+            system("cls");
+            ordenar_data(dt,at,qtd3,qtd);
+            mostrar_dietas(dt,at,qtd3,qtd);
+            break;
 
         }
     }
@@ -768,7 +1340,6 @@ int	submenu_1(int *qtd2, pessoa_tipo *pt)
 {
     char		op;
 
-    inicializar_pessoas(pt, qtd2);
     do
     {
         do
@@ -825,13 +1396,14 @@ int	submenu_1(int *qtd2, pessoa_tipo *pt)
 
 int	main(void)
 {
-    int		qtd = 0, qtd2 = 0, qtd3 = 0; //variáveis utilizadas ao longo de todo o programa
+    int		qtd = 0, qtd2 = 0, qtd3 = 0; //variÃ¡veis utilizadas ao longo de todo o programa
     char		op;
     pessoa_tipo	    pt[MAX_PESSOAS];
     alimento_tipo	al[MAX_ALIMENTOS];
     dieta_tipo      dt[MAX_DIETAS];
 
     inicializar_alimentos(al,&qtd);
+    inicializar_pessoas(pt, &qtd2);
 
 
     do
